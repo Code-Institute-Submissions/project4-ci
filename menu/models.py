@@ -2,6 +2,8 @@ from django.db import models
 
 # Create your models here.
 COURSECHOICES = [(0,'Starters'), (1, 'Mains'), (2,'Desert')]
+
+
 class FoodMenu(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
