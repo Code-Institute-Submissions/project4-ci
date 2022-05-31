@@ -12,3 +12,6 @@ class RecipePost(models.Model):
     featured_image = CloudinaryField("image", default="placeholder")
     excerpt = models.TextField(blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title

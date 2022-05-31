@@ -2,4 +2,9 @@
 {% load static %}
 {% block content %}
 <h1>Easy Home Recipes</h1>
+<ul>
+{% for recipe in recipes %}
+    <li><a href="#">{{ recipe.title }} by {{ recipe.author }}</a></li>
+{% endfor %}
+</ul>
 {% endblock %}
