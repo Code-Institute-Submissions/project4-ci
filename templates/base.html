@@ -133,11 +133,16 @@
         <li><a href="{% url 'menu_page' %}" class="nav-link px-2 link-dark">Menu</a></li>
         <li><a href="#" class="nav-link px-2 link-dark">Booking</a></li>
       </ul>
-
+      {% if user.is_authenticated %}
       <div class="col-md-3 text-end">
-        <a href="#" type="button" class="btn btn-outline-primary me-2">Login</a>
-        <button type="button" class="btn btn-primary">Sign-up</button>
+        <a href="{% url 'account_logout' %}" type="button" class="btn btn-outline-primary me-2">Logout</a>
       </div>
+      {% else %}
+      <div class="col-md-3 text-end">
+        <a href="{% url 'account_login' %}" type="button" class="btn btn-outline-primary me-2">Login</a>
+        <a href="{% url 'account_signup' %}" type="button" class="btn btn-primary">Sign-up</a>
+      </div>
+      {% endif %}
     </header>
   </div>
   {% block content %}
