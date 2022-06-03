@@ -4,7 +4,10 @@
 <h1>Easy Home Recipes</h1>
 <ul>
 {% for recipe in recipes %}
-    <li><a href="#">{{ recipe.title }} by {{ recipe.author }}</a></li>
+    <li><a href="{% url 'recipe_detail' recipe.id %}">{{ recipe.title }} by {{ recipe.author }}</a></li>
+    <a href="{% url 'recipe_update' recipe.id %}" class="btn btn-primary">Edit</a>
+    <a href="{% url 'recipe_delete' recipe.id %}" class="btn btn-primary">Delete</a>
 {% endfor %}
 </ul>
+<a href="{% url 'create_recipe' %}" class="btn btn-primary">Create new recipe</a>
 {% endblock %}

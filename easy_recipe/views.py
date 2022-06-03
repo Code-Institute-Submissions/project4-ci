@@ -1,17 +1,25 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, ListView
 from .models import RecipePost
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 
-@login_required(redirect_field_name='account_login')
-def recipes(request):
-    recipes = RecipePost.objects.all()
-    return render(request, 'easy_recipe/recipes.html', {'recipes': recipes})
+class RecipeListView(ListView):
+    model = RecipePost
+    context_object_name = 'recipes'
+    template_name = 'easy_recipe/recipes.html'
+
+
+class RecipeDetailView(DetailView):
+    model = RecipePost
+    context_object_name = 'recipe'
+    template_name = 'easy_recipe/recipe_detail.html'
+
 
 class RecipeCreateView(CreateView):
     model = RecipePost 
     template_name = 'easy_recipe/recipe_create_form.html'
+    success_url = reverse_lazy('recipes')
     fields = [
         'title',
         'author',
@@ -20,3 +28,20 @@ class RecipeCreateView(CreateView):
         'excerpt',
         ]
 
+class RecipeUpdateView(UpdateView):
+    model = RecipePost 
+    context_object_name = 'recipe'
+    template_name = 'easy_recipe/recipe_update_form.html'
+    fields = [
+        'title',
+        'author',
+        'content', 
+        'featured_image',
+        'excerpt',
+        ]
+
+class RecipeDeleteView(DeleteView):
+    model = RecipePost
+    template_name = 'easy_recipe/recipe_delete.html'
+    success_url = reverse_lazy('recipes')
+    
