@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
 <h1>Easy Home Recipes</h1>
 
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Update">
+    <input class="btn btn-success" type="submit" value="Update">
+    <a href="{% url 'recipes' %}" class="btn btn-danger">Cancel</a>
 </form>
+</div>
+</div>
+</div>
 {% endblock %}

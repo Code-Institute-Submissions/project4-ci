@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<h1>New Recipe</h1>
-<form method="post">{% csrf_token %}
+<div class="container">
+<div class="row">
+    <div class="col text-center">
+        <h1>New Recipe</h1>
+<form method="post" class="from-control ">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Save">
+    <input type="submit" value="Save" class="btn btn-success">
+    <a href="{% url 'recipes' %}" class="btn btn-danger">Cancel</a>
 </form>
+</div>
+</div>
+</div>
 {% endblock %}

@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col text-">
 <h1>Details</h1>
 <h2> {{ recipe.title }} </h2>
 <p>{{ recipe.content }}</p>
 <a href="{% url 'recipes' %}" class="btn btn-primary">Back to Recipes</a>
-
+</div>
+</div>
+</div>
 {% endblock %}
