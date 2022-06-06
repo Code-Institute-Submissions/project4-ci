@@ -8,12 +8,15 @@
 <div class="list-group">
 {% for recipe in recipes %}
     <a class="list-group-item list-group-item-action" href="{% url 'recipe_detail' recipe.id %}">{{ recipe.title }} by {{ recipe.author }}</a>
-
+{% if user.is_staff %}
     <a href="{% url 'recipe_update' recipe.id %}" class="list-group-item list-group-item-action">Edit</a>
     <a href="{% url 'recipe_delete' recipe.id %}" class="list-group-item list-group-item-action">Delete</a>
+{% endif %}
 {% endfor %}
 </div>
-<a href="{% url 'create_recipe' %}" class="btn btn-primary">Create new recipe</a>
+{% if user.is_staff %}
+<a href="{% url 'create_recipe' %}" class="btn btn-primary mt-5 ">Create new recipe</a>
+{% endif %}
 </div>
 </div>
 </div>
