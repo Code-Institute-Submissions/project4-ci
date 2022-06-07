@@ -8,10 +8,6 @@
 <ul>
 {% for recipe in recipes %}
    <li><a href="{% url 'recipe_detail' recipe.id %}">{{ recipe.title }} by {{ recipe.author }}</a></li>
-{% if user.is_staff %}
-    <a href="{% url 'recipe_update' recipe.id %}" class="btn btn-success">Edit</a>
-    <a href="{% url 'recipe_delete' recipe.id %}" class="btn btn-danger">Delete</a>
-{% endif %}
 {% endfor %}
 </ul>
 {% if user.is_staff %}

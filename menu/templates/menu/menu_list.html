@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if user.is_staff %}
+<h2>Menu Items</h2>
+<a href="{% url 'item_create_form' %}" class="btn btn-sm btn-primary">Create new Item</a>
+<ul>
+    {% for fooditem in fooditems %}
+    <li><a href="{% url 'item_detail' fooditem.id %}">{{ fooditem }}</a></li>
+    <a href="{% url 'item_detail' fooditem.id %}" class="btn btn-primary btn-sm">Detail</a>
+    {% endfor %}
+</ul>
+{% else %}
+<h2>You do not have permission to access this page.</h2>
+
+{% endif %}
+{% endblock %}

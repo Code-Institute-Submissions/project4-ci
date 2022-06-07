@@ -37,6 +37,12 @@
           <li><a href="{% url 'index' %}" class="nav-link px-2 link-dark">Home</a></li>
           <li><a href="{% url 'menu_page' %}" class="nav-link px-2 link-dark">Menu</a></li>
           <li><a href="#" class="nav-link px-2 link-dark">Booking</a></li>
+          {% if user.is_staff %}
+          <li><a href="{% url 'menu_list' %}" class="nav-link px-2 link-dark">Menu List</a></li>
+          <li><a href="{% url 'recipes' %}" class="nav-link px-2 link-dark">Recipe List</a></li>
+          {% else %}
+          <li><a href="{% url 'recipes' %}" class="nav-link px-2 link-dark">Recipes</a></li>
+          {% endif %}
         </ul>
         {% if user.is_authenticated %}
         <div class="col-md-3 text-end">
