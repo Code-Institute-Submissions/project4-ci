@@ -9,3 +9,6 @@ class FoodMenu(models.Model):
     description = models.TextField()
     course = models.IntegerField(choices=COURSECHOICES)
     price = models.IntegerField()
+
+    def __str__(self):
+        return self.title

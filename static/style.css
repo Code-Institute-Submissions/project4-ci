@@ -3,8 +3,18 @@
     height: 75px;
   }
 
-  .main-jumbo {
+.main-jumbo {
       background-image: url("images/party.jpeg");
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
   }
 
-  
+ul {
+      list-style-type: none;
+  }
+
+a {
+    text-decoration: none;
+    color: black;
+}

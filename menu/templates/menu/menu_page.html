@@ -1,8 +1,40 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
 <h1>Menu</h1>
+<div class="row">
+    <div class="col">
 <h2>Starters</h2>
+{% for starter in starters %}
+<h4> {{starter.title}} </h4>
+<p> {{starter.description}} </p>
+<p>Price £ {{starter.price}}</p>
+{% endfor %}
+</div>
+</div>
+<div class="row">
+    <div class="col-6">
 <h2>Mains</h2>
+{% for main in mains %}
+<h4> {{main.title}} </h4>
+<p> {{main.description}} </p>
+<p>Price £ {{main.price}}</p>
+{% endfor %}
+</div>
+</div>
+<div class="row">
+    <div class="col">
 <h2>Dessert</h2>
+{% for dessert in desserts %}
+<h4> {{dessert.title}} </h4>
+<p> {{dessert.description}} </p>
+<p>Price £ {{dessert.price}}</p>
+{% endfor %}
+</div>
+</div>
+</div>
+</div>
 {% endblock %}
