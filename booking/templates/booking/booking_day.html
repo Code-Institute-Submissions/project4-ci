@@ -2,9 +2,10 @@
 {% load static %}
 {% block content %}
 <h1>Bookings</h1>
-<ul>
-{% for time in times%}
-<li>Date: {{time.date}} Time: {{time.time}} User: {{time.user}}</li>
-{% endfor %}
-</ul>
+<form action="{% url 'booking_detail' %}" method="POST" class="form-control">
+    {% csrf_token %}
+<label for="date">Please choose a day</label>
+<input id="date" name="date" type="date">
+<input type="submit">
+</form>
 {% endblock %}
