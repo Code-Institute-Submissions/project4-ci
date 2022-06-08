@@ -23,5 +23,5 @@ urlpatterns = [
     path('menu_page/', include('menu.urls')),
     path('recipes/', include('easy_recipe.urls')),
     path('accounts/', include('allauth.urls')),
-    
+    path('booking/', include('booking.urls')),
 ]
