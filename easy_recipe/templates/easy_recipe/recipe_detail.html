@@ -3,18 +3,20 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col text-">
+        <div class="col">
 <h1>Details</h1>
 <h2> {{ recipe.title }} </h2>
 <div class="d-none d-md-block col-md-6 masthead-image">
     <!-- The featured image URL goes in the src attribute -->
     {% if "placeholder" in post.featured_image.url %}
-    <img src="https://codeinstitute.s3.amazonaws.com/fullstack/blog/default.jpg" width="100%">
+    <img src="{% static 'images/cooking.jpg' %}" width="100%">
     {% else %}
     <img src=" {{ recipe.featured_image.url }}" width="100%">
     {% endif %}
 </div>
-<p>{{ recipe.content }}</p>
+<p>
+    {{ recipe.content|linebreaks }}
+</p>
 {% if user.is_staff %}
     <a href="{% url 'recipe_update' recipe.id %}" class="btn btn-success">Edit</a>
     <a href="{% url 'recipe_delete' recipe.id %}" class="btn btn-danger">Delete</a>
