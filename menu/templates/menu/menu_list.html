@@ -7,7 +7,6 @@
 <ul>
     {% for fooditem in fooditems %}
     <li><a href="{% url 'item_detail' fooditem.id %}">{{ fooditem }}</a></li>
-    <a href="{% url 'item_detail' fooditem.id %}" class="btn btn-primary btn-sm">Detail</a>
     {% endfor %}
 </ul>
 {% else %}
