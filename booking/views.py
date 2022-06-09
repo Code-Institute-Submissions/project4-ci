@@ -15,7 +15,19 @@ def booking_detail(request):
         for day in days:
             closed_days.append(day.day.strftime("%Y-%m-%d"))
         if len(bookings) > 0:
-            pass
+            # my_list1 = []
+            # new_list = []
+            # for time in bookings.time:
+            #     print(time)
+            #     new_list.append(arr.count(i))
+            # for num in new_list:
+            #     if num > 2:
+            #         index_of = new_list.index(num)
+            #         my_list1.append(my_list[index_of])
+
+            # my_list1 = list(dict.fromkeys(my_list1))
+            # return my_list1
+            # pass
         else:
             times = ['12:00', '13:00','14:00',
                     '15:00', '16:00', '17:00',
