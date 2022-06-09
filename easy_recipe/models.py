@@ -13,3 +13,6 @@ class RecipePost(models.Model):
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        sorted('-created_on')

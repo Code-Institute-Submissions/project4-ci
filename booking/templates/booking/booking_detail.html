@@ -2,9 +2,19 @@
 {% load static %}
 {% block content %}
 <h1>Bookings</h1>
-<ul>
-{% for booking in bookings %}
-<li>Date: {{ booking.date}} Time: {{booking.time}} User: {{booking.user}}</li>
-{% endfor%}
-</ul>
+<form method="POST" class="form-control">
+    {% csrf_token %}
+    <label for="day">Day</label><br>
+    <input type="date" value="{{date}}" disabled><br><br>
+    <label for="time">Choose a Time:</label>
+    <select name="time" id="time">
+        {% for time in times %}
+    <option value="{{time}}">{{time}}</option>
+    {% endfor %}
+    </select>
+  <br><br>
+        
+        
+    <input type="submit" class="btn btn-sm btn-success">
+</form>
 {% endblock %}
