@@ -2,6 +2,9 @@
 {% load static %}
 {% block content %}
 <h1>Bookings</h1>
+{% if date in closed_days %}
+<h2>We are closed on this day. Sorry for the inconvenience caused.</h2>
+{% else %}
 <form method="POST" class="form-control">
     {% csrf_token %}
     <label for="day">Day</label><br>
@@ -13,8 +16,7 @@
     {% endfor %}
     </select>
   <br><br>
-        
-        
     <input type="submit" class="btn btn-sm btn-success">
 </form>
+{% endif %}
 {% endblock %}
