@@ -7,7 +7,7 @@ class TimeSlot(models.Model):
     
     date = models.DateField(auto_now=False, auto_now_add=False)
     time = models.CharField(max_length=5)
-    number_of_people = models.IntegerField(null=True, blank=False)
+    number_of_people = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

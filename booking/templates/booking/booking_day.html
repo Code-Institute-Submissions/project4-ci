@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <h1>Bookings</h1>
-<form action="{% url 'booking_detail' %}" method="POST" class="form-control">
+<form action="{% url 'booking_detail' %}" method="GET" class="form-control">
     {% csrf_token %}
 <label for="date">Please choose a day</label>
 <input id="date" name="date" type="date" required><br>

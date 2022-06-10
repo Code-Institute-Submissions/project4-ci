@@ -1,15 +1,18 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from .models import TimeSlot, Closed
-from datetime import datetime
 
+
+@login_required
 def booking_day(request):
     return render(request, 'booking/booking_day.html', {})
 
+@login_required
 def booking_detail(request):
-    
-    if request.method == 'POST':
+    if request.method == 'GET':
         # date entered by user in booking_day page
-        date = request.POST.get('date')
+        date = request.GET.get('date')
         # queries database using date
         bookings = TimeSlot.objects.filter(date=date)
         # queries databse for daysed closed and extracts days and 
@@ -51,11 +54,14 @@ def booking_detail(request):
                      '15:00', '16:00', '17:00',
                      '18:00', '19:00', '20:00']
 
-        # time = request.POST.get('time')
-        # number_of_people = request.POST.get('number_of_people')
-        # user = request.POST.get('user')
-        # form = TimeSlot(date=date, time=time, user=user, number_of_people=number_of_people)
-        # form.save()
+    if request.method == 'POST':
+        date = request.POST.get('date')
+        time = request.POST.get('time')
+        number_of_people = request.POST.get('number_of_people')
+        user = User.objects.get('user_id')
+        print(user)
+        form = TimeSlot(date=date, time=time, user=user, number_of_people=number_of_people)
+        form.save()
 
     return render(request, 'booking/booking_detail.html', 
                   {'bookings': bookings,
