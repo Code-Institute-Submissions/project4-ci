@@ -4,6 +4,7 @@
 <h1>Bookings</h1>
 {% if date in closed_days %}
 <h2>We are closed on this day. Sorry for the inconvenience caused.</h2>
+<a href="{% url 'booking_day' %}" class="btn btn-sm btn-primary">Back</a>
 {% else %}
 <form method="POST" class="form-control">
     {% csrf_token %}
@@ -17,6 +18,8 @@
     </select>
   <br><br>
     <input type="submit" class="btn btn-sm btn-success">
+    <a href="{% url 'booking_day' %}" class="btn btn-sm btn-primary">Back</a>
 </form>
+
 {% endif %}
 {% endblock %}
