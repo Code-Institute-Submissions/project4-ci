@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import TimeSlot, Closed
 
 
+
 @login_required
 def booking_day(request):
     return render(request, 'booking/booking_day.html', {})
@@ -15,7 +16,7 @@ def booking_detail(request):
         date = request.GET.get('date')
         # queries database using date
         bookings = TimeSlot.objects.filter(date=date)
-        # queries databse for daysed closed and extracts days and 
+        # queries database for days closed and extracts days and 
         # inserts into list
         days = Closed.objects.all()
         closed_days = []
@@ -57,10 +58,10 @@ def booking_detail(request):
     if request.method == 'POST':
         date = request.POST.get('date')
         time = request.POST.get('time')
-        number_of_people = request.POST.get('number_of_people')
-        user = User.objects.get('user_id')
+        user = user_id
         print(user)
-        form = TimeSlot(date=date, time=time, user=user, number_of_people=number_of_people)
+        number_of_people = request.POST.get('number_of_people')
+        form = TimeSlot(date=date, time=time, user=user ,number_of_people=number_of_people)
         form.save()
 
     return render(request, 'booking/booking_detail.html', 
