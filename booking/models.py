@@ -1,17 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
 
 
 class TimeSlot(models.Model):
+    
     date = models.DateField(auto_now=False, auto_now_add=False)
     time = models.CharField(max_length=5)
+    number_of_people = models.IntegerField(null=True, blank=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.last_name
+        return self.last_name
 
     class Meta:
         sorted('-date')
+
 
 class Closed(models.Model):
     day = models.DateField(auto_now=False, auto_now_add=False)
