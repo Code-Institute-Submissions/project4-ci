@@ -8,7 +8,6 @@ def booking_day(request):
 def booking_detail(request):
     
     if request.method == 'POST':
-
         # date entered by user in booking_day page
         date = request.POST.get('date')
         # queries database using date
@@ -51,6 +50,12 @@ def booking_detail(request):
             times = ['12:00', '13:00', '14:00',
                      '15:00', '16:00', '17:00',
                      '18:00', '19:00', '20:00']
+
+        # time = request.POST.get('time')
+        # number_of_people = request.POST.get('number_of_people')
+        # user = request.POST.get('user')
+        # form = TimeSlot(date=date, time=time, user=user, number_of_people=number_of_people)
+        # form.save()
 
     return render(request, 'booking/booking_detail.html', 
                   {'bookings': bookings,

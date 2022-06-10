@@ -4,10 +4,10 @@
   }
 
 .main-jumbo {
-      background-image: url("images/party.jpeg");
-      height: 100%;
-      width: 100%;
-      object-fit: contain;
+    background-image: url("images/party.jpeg");
+    height:100%;
+    width: 100%;
+    object-fit: contain;
   }
 
 ul {

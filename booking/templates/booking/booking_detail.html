@@ -8,13 +8,24 @@
 {% else %}
 <form method="POST" class="form-control">
     {% csrf_token %}
-    <label for="day">Day</label><br>
-    <input type="date" value="{{date}}" disabled><br><br>
+    <label for="date">Day</label><br>
+    <input  name="date" id="date" type="date" value="{{date}}" disabled><br><br>
+    <label for="user"></label>
+    <input name="user" id="user" type="text" value="{{user}}" disabled><br><br>
     <label for="time">Choose a Time:</label>
     <select name="time" id="time">
         {% for time in times %}
     <option value="{{time}}">{{time}}</option>
     {% endfor %}
+    </select><br><br>
+    <label for="number_of_people">Number of people</label>
+    <select id="number_of_people" name="number_of_people">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
     </select>
   <br><br>
     <input type="submit" class="btn btn-sm btn-success">
