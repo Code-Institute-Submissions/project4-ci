@@ -24,7 +24,7 @@ class RecipeCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = RecipePost 
     template_name = 'easy_recipe/recipe_create_form.html'
     success_url = reverse_lazy('recipes')
-    success_message = 'New recipe created sucessfully'
+    success_message = 'New recipe created successfully'
     fields = [
         'title',
         'author',
@@ -49,7 +49,7 @@ class RecipeUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 class RecipeDeleteView(LoginRequiredMixin, DeleteView):
     model = RecipePost
     template_name = 'easy_recipe/recipe_delete.html'
-    success_message = 'Recipe deleted sucessfully!'
+    success_message = 'Recipe deleted successfully!'
     success_url = reverse_lazy('recipes')
     
     def delete(self, request, *args, **kwargs):

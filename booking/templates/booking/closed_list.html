@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-6 offset-3 text-center">
+<h1>Closed Dates</h1>
+<ul class="list-group">
+{% for date in dates %}
+   <li class="list-group-item"><a href="{% url 'closed_detail' date.id %}">{{date.day}}</a></li>
+{% endfor %}
+</ul>
+<a href="{% url 'closed_create_form' %}" class="btn btn-primary mt-5 ">Create New Closed date</a>
+</div>
+</div>
+</div>
+{% endblock %}

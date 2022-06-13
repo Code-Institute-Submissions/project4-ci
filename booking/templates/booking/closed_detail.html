@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+<h1>Details</h1>
+<h4> {{ date.date }} </h4>
+<p>{{date.reason}}</p>
+
+{% if user.is_staff %}
+    <a href="{% url 'closed_update_form' date.id %}" class="btn btn-success">Edit</a>
+    <a href="{% url 'closed_delete' date.id %}" class="btn btn-danger">Delete</a>
+{% endif %}
+<a href="{% url 'closed_list' %}" class="btn btn-primary">Back to List</a>
+</div>
+</div>
+</div>
+{% endblock %}
