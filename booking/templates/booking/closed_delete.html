@@ -12,11 +12,14 @@
     <input class="btn btn-success" type="submit" value="Confirm">
     <a class="btn btn-danger" href="{% url 'closed_list' %}">Cancel</a>
 </form>
+</div>
+</div>
 {% else %}
-<h2>You do not have permission to access this page.</h2>
-
+<div class="row">
+    <div class="col text-center">
+        <h3>You do not have permission to access this page.</h3>
+    </div>
+</div>
 {% endif %}
-</div>
-</div>
 </div>
 {% endblock %}
