@@ -56,12 +56,12 @@ def booking_detail(request):
                      '18:00', '19:00', '20:00']
 
     if request.method == 'POST':
+        current_user = request.user
         date = request.POST.get('date')
         time = request.POST.get('time')
-        user = user_id
-        print(user)
+        user = User.objects.get(id=current_user.id)
         number_of_people = request.POST.get('number_of_people')
-        form = TimeSlot(date=date, time=time, user=user ,number_of_people=number_of_people)
+        form = TimeSlot(date=date, time=time, user=user, number_of_people=number_of_people)
         form.save()
 
     return render(request, 'booking/booking_detail.html', 

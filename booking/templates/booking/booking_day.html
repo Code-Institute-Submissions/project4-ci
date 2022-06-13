@@ -8,4 +8,9 @@
 <input id="date" name="date" type="date" required><br>
 <input type="submit" class="btn btn-sm btn-success mt-3">
 </form>
+<script>
+    const d = new Date();
+    let newDate = d.toISOString().split('T')[0];
+    document.getElementById("date").setAttribute("min",newDate)
+</script>
 {% endblock %}
