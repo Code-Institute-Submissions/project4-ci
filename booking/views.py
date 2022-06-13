@@ -7,7 +7,10 @@ from .models import TimeSlot, Closed
 
 @login_required
 def booking_day(request):
-    return render(request, 'booking/booking_day.html', {})
+    current_user = request.user
+    user = User.objects.get(id=current_user.id)
+    bookings = TimeSlot.objects.filter(user=user)
+    return render(request, 'booking/booking_day.html', {'bookings': bookings})
 
 @login_required
 def booking_detail(request):
