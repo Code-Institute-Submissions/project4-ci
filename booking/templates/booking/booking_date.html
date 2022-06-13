@@ -4,22 +4,18 @@
 <div class="container">
     <div class="row">
         <div class="col text-center">
-<h1>Choose a Date</h1>
-<form action="{% url 'booking_detail' %}" method="GET" class="form-control">
+<h1>Choose Booking Date</h1>
+{% if user.is_staff %}
+<form action="{% url 'booking_date_list' %}" method="GET" class="form-control">
     {% csrf_token %}
 <label for="date">Please choose a day</label>
 <input id="date" name="date" type="date" required><br>
 <input type="submit" class="btn btn-sm btn-success mt-3">
 </form>
-{% if user.is_staff %}
-<a href="{% url 'booking_date' %}" class="btn btn-sm btn-success mt-4">Booking list</a>
+{% else %}
+<h2>You do not have permission to access this information</h2>
 {% endif %}
 </div>
 </div>
 </div>
-<script>
-    const d = new Date();
-    let newDate = d.toISOString().split('T')[0];
-    document.getElementById("date").setAttribute("min",newDate)
-</script>
 {% endblock %}

@@ -1,34 +1,42 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<h1>Bookings</h1>
-{% if date in closed_days %}
-<h2>We are closed on this day. Sorry for the inconvenience caused.</h2>
-<a href="{% url 'booking_day' %}" class="btn btn-sm btn-primary">Back</a>
-{% else %}
-<form method="POST" class="form-control">
-    {% csrf_token %}
-    <label for="date"></label><br>
-    <input  name="date" id="date" type="hidden" value="{{date}}"><br><br>
-    <label for="time">Choose a Time:</label>
-    <select name="time" id="time">
-        {% for time in times %}
-    <option value="{{time}}">{{time}}</option>
-    {% endfor %}
-    </select><br><br>
-    <label for="number_of_people">Number of people</label>
-    <select id="number_of_people" name="number_of_people">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-    </select>
-  <br><br>
-    <input type="submit" class="btn btn-sm btn-success">
-    <a href="{% url 'booking_day' %}" class="btn btn-sm btn-primary">Back</a>
-</form>
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
 
-{% endif %}
+
+      <h1>Booking for {{ date }}</h1>
+      {% if date in closed_days %}
+      <h2>We are closed on this day. Sorry for the inconvenience caused.</h2>
+      <a href="{% url 'booking_day' %}" class="btn btn-sm btn-primary">Back</a>
+      {% else %}
+      <form method="POST" class="form-control text-center">
+        {% csrf_token %}
+        <label for="date"></label><br>
+        <input name="date" id="date" type="hidden" value="{{date}}"><br><br>
+        <label for="time">Choose a Time:</label>
+        <select name="time" id="time">
+          {% for time in times %}
+          <option value="{{time}}">{{time}}</option>
+          {% endfor %}
+        </select><br><br>
+        <label for="number_of_people">Number of people</label>
+        <select id="number_of_people" name="number_of_people">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+        <br><br>
+        <input type="submit" class="btn btn-sm btn-success">
+        <a href="{% url 'booking_day' %}" class="btn btn-sm btn-primary">Back</a>
+      </form>
+
+      {% endif %}
+    </div>
+  </div>
+</div>
 {% endblock %}

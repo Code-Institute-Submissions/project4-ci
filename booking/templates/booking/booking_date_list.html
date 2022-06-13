@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+
+
+<h1>Bookings for {{ date }}</h1>
+{% if user.is_staff %}
+{% if bookings %}
+<ul class="list-group">
+{% for booking in bookings %}
+<li class="list-group-item"><strong>Time:</strong> {{booking.time}}  <strong>Customer:</strong> {{booking.user.last_name}} </li>
+{% endfor %}
+</ul>
+{% else %}
+<h2> There are no bookings for today.</h2>
+{% endif%}
+<a class="btn btn-sm btn-success mt-4" href="{% url 'booking_date' %}">Back</a>
+{% else %}
+<h2>You do not have permission to access this information</h2>
+{% endif %}
+</div>
+</div>
+</div>
+{% endblock %}

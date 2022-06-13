@@ -70,3 +70,14 @@ def booking_detail(request):
                    'times': times,
                    'closed_days': closed_days
                    })
+@login_required
+def booking_date(request):
+    return render(request, 'booking/booking_date.html')
+
+@login_required
+def booking_date_list(request):
+    if request.method == 'GET':
+        date = request.GET.get('date')
+    bookings = TimeSlot.objects.filter(date=date)
+
+    return render(request, 'booking/booking_date_list.html', {'bookings': bookings,'date': date})
