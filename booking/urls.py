@@ -11,4 +11,7 @@ urlpatterns = [
     path('closed_delete/<int:pk>', views.ClosedDeleteView.as_view(), name='closed_delete'),
     path('closed_update_form/<int:pk>', views.ClosedUpdateView.as_view(), name='closed_update_form'),
     path('closed_create_form', views.ClosedCreateView.as_view(), name='closed_create_form'),
+    path('customer_booking_detail/<int:pk>', views.CustomerBookingDetailView.as_view(), name='customer_booking_detail'),
+    path('booking_delete/<int:pk>', views.BookingDeleteView.as_view(), name='customer_booking_delete'),
+    path('customer_booking_list', views.CustomerBookingListView.as_view(), name='customer_booking_list')
 ]

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+<form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete the booking for "{{ object.date }}"?</p>
+    {{ form }}
+    <input class="btn btn-success" type="submit" value="Confirm">
+    <a class="btn btn-danger" href="{% url 'customer_booking_list' %}">Cancel</a>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

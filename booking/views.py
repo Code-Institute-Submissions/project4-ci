@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, ListView
@@ -142,3 +143,23 @@ class ClosedDeleteView(LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super(ClosedDeleteView, self).delete(request, *args, **kwargs)
+
+class CustomerBookingListView(LoginRequiredMixin, ListView):
+    model = TimeSlot
+    context_object_name = 'timeslots'
+    template_name = 'booking/customer_booking_list.html'
+
+class CustomerBookingDetailView(LoginRequiredMixin, DetailView):
+    model = TimeSlot
+    context_object_name = 'timeslots'
+    template_name = 'booking/customer_booking_detail.html'
+
+class BookingDeleteView(LoginRequiredMixin, DeleteView):
+    model = TimeSlot
+    template_name = 'booking/customer_booking_delete.html'
+    success_message = 'Date deleted successfully!'
+    success_url = reverse_lazy('booking_day')
+    
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(BookingDeleteView, self).delete(request, *args, **kwargs)

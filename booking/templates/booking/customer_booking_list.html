@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+{% if timeslots %}
+    <div class="row">
+        <div class="col-6 offset-3 text-center">
+<h1>Your bookings</h1>
+<ul class="list-group">
+    {% for timeslot in timeslots %}
+   <li class="list-group-item">
+       <a href="{% url 'customer_booking_detail' timeslot.id %}">{{timeslot.date}} {{timeslot.time}}</a>
+   </li>
+   {% endfor %}
+</ul>
+</div>
+</div>
+{% else %}
+<div class="row">
+    <div class="col text-center">
+        <h3>You do not have any bookings.</h3>
+    </div>
+</div>
+{% endif %}
+</div>
+
+{% endblock %}
