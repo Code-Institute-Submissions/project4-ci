@@ -5,9 +5,11 @@
 
 .main-jumbo {
     background-image: url("images/party.jpeg");
-    height:100%;
-    width: 100%;
-    object-fit: contain;
+    height:400px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
   }
 
 ul {
@@ -17,4 +19,10 @@ ul {
 a {
     text-decoration: none;
     color: black;
+}
+
+#logo {
+  font-style: italic;
+  font-size: 150%;
+  padding-left: 10px;
 }
