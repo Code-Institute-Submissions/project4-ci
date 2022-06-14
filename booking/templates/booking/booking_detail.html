@@ -12,15 +12,21 @@
       <form method="POST" class="form-control text-center">
         {% csrf_token %}
         <label for="date"></label><br>
-        <input name="date" id="date" type="hidden" value="{{date}}"><br><br>
+        <input name="date" id="date" type="hidden" value="{{date}}">
+        <label for="first_name">First Name</label><br>
+        <input name="first_name" id="first_name" type="text" required"><br>
+        <label for="last_name">Last Name</label><br>
+        <input name="last_name" id="last_name" type="text" required"><br><br>
+        <label for="phone">Telephone number</label><br>
+        <input name="phone" id="phone" type="phone" required"><br><br>
         <label for="time">Choose a Time:</label>
-        <select name="time" id="time">
+        <select name="time" id="time" required>
           {% for time in times %}
           <option value="{{time}}">{{time}}</option>
           {% endfor %}
         </select><br><br>
         <label for="number_of_people">Number of people</label>
-        <select id="number_of_people" name="number_of_people">
+        <select id="number_of_people" name="number_of_people" required>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>

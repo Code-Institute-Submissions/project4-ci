@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, ListView
@@ -21,19 +21,15 @@ def booking_day(request):
 
 @login_required
 def booking_detail(request):
-    if request.method == 'GET':
-        # date entered by user in booking_day page
-        date = request.GET.get('date')
-        # queries database using date
-        bookings = TimeSlot.objects.filter(date=date)
-        # queries database for days closed and extracts days and 
-        # inserts into list
-        days = Closed.objects.all()
-        closed_days = []
-        for day in days:
-            closed_days.append(day.day.strftime("%Y-%m-%d"))
-        # function looks for available times for date
-        if len(bookings) > 0:
+    date = request.GET.get('date')
+    bookings = TimeSlot.objects.filter(date=date)
+    days = Closed.objects.all()
+    closed_days = []
+    days = Closed.objects.all()
+    for day in days:
+        closed_days.append(day.day.strftime("%Y-%m-%d"))
+    
+    if len(bookings) > 0:
             times = ['12:00', '13:00','14:00',
                 '15:00', '16:00', '17:00',
                 '18:00', '19:00', '20:00']
@@ -60,22 +56,30 @@ def booking_detail(request):
             for slot in time:
                 if slot in times:
                     times.remove(slot)
-        else:
-            times = ['12:00', '13:00', '14:00',
-                 '15:00', '16:00', '17:00',
-                 '18:00', '19:00', '20:00']
+    else:
+        times = ['12:00', '13:00', '14:00',
+                '15:00', '16:00', '17:00',
+                '18:00', '19:00', '20:00']
 
     if request.method == 'POST':
         current_user = request.user
         date = request.POST.get('date')
         time = request.POST.get('time')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        phone = request.POST.get('phone')
         user = User.objects.get(id=current_user.id)
         number_of_people = request.POST.get('number_of_people')
-        form = TimeSlot(date=date, time=time, user=user, number_of_people=number_of_people)
-        print(form)
+        form = TimeSlot(date=date,
+                        first_name=first_name,
+                        last_name=last_name,
+                        time=time,
+                        user=user,
+                        phone=phone,
+                        number_of_people=number_of_people
+                        )
         form.save()
-        
-
+        return redirect('booking_day')
     return render(request, 'booking/booking_detail.html', 
                   {'bookings': bookings,
                    'date': date,
@@ -88,8 +92,7 @@ def booking_date(request):
 
 @login_required
 def booking_date_list(request):
-    if request.method == 'GET':
-        date = request.GET.get('date')
+    date = request.GET.get('date')
     bookings = TimeSlot.objects.filter(date=date)
 
     return render(request, 'booking/booking_date_list.html', {'bookings': bookings,'date': date})

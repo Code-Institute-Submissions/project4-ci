@@ -2,6 +2,18 @@
 {% load static %}
 {% block content %}
 <div class="container">
+    <div class="col center-text mt-5">
+        {% if bookings %}
+<h2 class="mb-5"> Your bookings</h2>
+{% for booking in bookings %}
+<ul class="list-group ">
+    <li class="list-group-item"><strong>Date:</strong> {{booking.date}} <strong>Time:</strong> {{booking.time}}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<h2>You have no bookings</h2>
+{% endif %}
+    </div>
     <div class="row">
         <div class="col text-center">
 <h1>Choose a Date</h1>
@@ -18,18 +30,7 @@
 </div>
 </div>
 <div class="row">
-    <div class="col center-text mt-5">
-        {% if bookings %}
-<h2 class="mb-5"> Your bookings</h2>
-{% for booking in bookings %}
-<ul class="list-group ">
-    <li class="list-group-item"><strong>Date:</strong> {{booking.date}} <strong>Time:</strong> {{booking.time}}</li>
-    {% endfor %}
-</ul>
-{% else %}
-<h2>You have no bookings</h2>
-{% endif %}
-    </div>
+    
 </div>
 </div>
 <script>
