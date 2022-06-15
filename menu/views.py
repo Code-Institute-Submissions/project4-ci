@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse
 from . import views
 from .models import FoodMenu
 from django.urls import reverse_lazy
@@ -29,26 +29,30 @@ class MenuCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = FoodMenu
     template_name = 'menu/item_create_form.html'
     success_message = 'New menu item created successfully'
-    success_url = reverse_lazy('menu_list')
     fields = [
         'title',
         'description',
         'course', 
         'price',
         ]
+    
+    def get_success_url(self):
+        return reverse('item_detail', args=[self.object.pk])
 
 class MenuUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = FoodMenu
     context_object_name = 'fooditems'
     template_name = 'menu/item_update_form.html'
     success_message = 'Menu item updated successfully'
-    success_url = reverse_lazy('menu_list')
     fields = [
         'title',
         'description',
         'course', 
         'price',
         ]
+    
+    def get_success_url(self):
+        return reverse('item_detail', args=[self.object.pk])
 
 
 class MenuDeleteView(LoginRequiredMixin, DeleteView):

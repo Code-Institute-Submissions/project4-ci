@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -80,7 +80,10 @@ def booking_detail(request):
                         number_of_people=number_of_people
                         )
         form.save()
-        return redirect('booking_day')
+        # return redirect('customer_booking_list')
+        messages.success(request, 'Booking created successfully!')
+        return redirect(reverse('customer_booking_detail', kwargs={'pk':form.id} ))
+
     return render(request, 'booking/booking_detail.html', 
                   {'bookings': bookings,
                    'date': date,
@@ -113,26 +116,29 @@ class ClosedDetailView(LoginRequiredMixin, DetailView):
 class ClosedCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Closed 
     template_name = 'booking/closed_create_form.html'
-    success_url = reverse_lazy('closed_list')
     success_message = 'Date added successfully'
     fields = [
         'day',
         'reason',
         'user', 
         ]
+    
+    def get_success_url(self):
+        return reverse('closed_detail', args=[self.object.pk])
 
 class ClosedUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Closed
     context_object_name = 'dates'
     template_name = 'booking/closed_update_form.html'
     success_message = 'Date updated successfully'
-    success_url = reverse_lazy('closed_list')
     fields = [
         'day',
         'reason',
         'user',
         ]
 
+    def get_success_url(self):
+        return reverse('closed_detail', args=[self.object.pk])
 
 class ClosedDeleteView(LoginRequiredMixin, DeleteView):
     model = Closed
@@ -158,7 +164,7 @@ class BookingDeleteView(LoginRequiredMixin, DeleteView):
     model = TimeSlot
     template_name = 'booking/customer_booking_delete.html'
     success_message = 'Date deleted successfully!'
-    success_url = reverse_lazy('booking_day')
+    success_url = reverse_lazy('customer_booking_list')
     
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)

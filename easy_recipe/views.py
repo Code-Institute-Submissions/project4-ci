@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, ListView
 from .models import RecipePost
@@ -23,7 +23,6 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
 class RecipeCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = RecipePost 
     template_name = 'easy_recipe/recipe_create_form.html'
-    success_url = reverse_lazy('recipes')
     success_message = 'New recipe created successfully'
     fields = [
         'title',
@@ -32,18 +31,23 @@ class RecipeCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         'featured_image',
         ]
 
+    def get_success_url(self):
+        return reverse('recipe_detail', args=[self.object.pk])
+
 class RecipeUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = RecipePost 
     context_object_name = 'recipe'
     template_name = 'easy_recipe/recipe_update_form.html'
     success_message = 'Recipe updated successfully'
-    success_url = reverse_lazy('recipes')
     fields = [
         'title',
         'author',
         'content', 
         'featured_image',
         ]
+    
+    def get_success_url(self):
+        return reverse('recipe_detail', args=[self.object.pk])
 
 
 class RecipeDeleteView(LoginRequiredMixin, DeleteView):

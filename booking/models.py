@@ -9,7 +9,7 @@ class TimeSlot(models.Model):
     time = models.CharField(max_length=5)
     first_name = models.CharField(max_length=50 , default='First Name')
     last_name = models.CharField(max_length=50, default='Surname' )
-    phone = PhoneNumberField(null=False, blank=False, unique=True, default=00)
+    phone = PhoneNumberField(null=False, blank=False, unique=False, default=00)
     number_of_people = models.IntegerField(default=1)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="bookings")
 
