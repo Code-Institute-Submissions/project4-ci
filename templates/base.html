@@ -35,10 +35,11 @@
         <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
           <img id="goat" src="{% static 'images/goat.png' %}" alt="logo"><span id="logo">The Smoking Goat</span>
         </a>
-        </div>
       </header>
+        </div>
+     <div class="container">
       <nav class="d-flex flex-wrap align-items-center justify-content-center mb-4 border-bottom">
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <ul class="nav col-12 justify-content-center col-md-auto mb-2 mb-md-0">
           <li><a href="{% url 'index' %}" class="nav-link px-2 link-dark">Home</a></li>
           <li><a href="{% url 'menu_page' %}" class="nav-link px-2 link-dark">Menu</a></li>
           <li><a href="{% url 'booking_day' %}" class="nav-link px-2 link-dark">Booking</a></li>
@@ -50,11 +51,11 @@
           {% endif %}
         </ul>
         {% if user.is_authenticated %}
-        <div class="col-md-3 text-end">
+        <div class="col text-end">
           <a href="{% url 'account_logout' %}" type="button" class="btn btn-outline-primary me-2">Logout</a>
         </div>
         {% else %}
-        <div class="col-md-3 text-end">
+        <div class="col text-end">
           <a href="{% url 'account_login' %}" type="button" class="btn btn-outline-primary me-2">Login</a>
           <a href="{% url 'account_signup' %}" type="button" class="btn btn-primary">Sign-up</a>
           {% endif %}

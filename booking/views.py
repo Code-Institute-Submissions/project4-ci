@@ -8,6 +8,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from .models import TimeSlot, Closed
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 
@@ -89,11 +91,11 @@ def booking_detail(request):
                    'times': times,
                    'closed_days': closed_days
                    })
-@login_required
+@staff_member_required
 def booking_date(request):
     return render(request, 'booking/booking_date.html')
 
-@login_required
+@staff_member_required
 def booking_date_list(request):
     date = request.GET.get('date')
     bookings = TimeSlot.objects.filter(date=date)
@@ -101,18 +103,24 @@ def booking_date_list(request):
     return render(request, 'booking/booking_date_list.html', {'bookings': bookings,'date': date})
 
     
-class ClosedListView(LoginRequiredMixin, ListView):
+class ClosedListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Closed
     context_object_name = 'dates'
     template_name = 'booking/closed_list.html'
 
-class ClosedDetailView(LoginRequiredMixin, DetailView):
+    def test_func(self):
+        return self.request.user.is_staff
+
+class ClosedDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Closed
     context_object_name = 'dates'
     template_name = 'booking/closed_detail.html'
 
+    def test_func(self):
+        return self.request.user.is_staff
 
-class ClosedCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+
+class ClosedCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Closed 
     template_name = 'booking/closed_create_form.html'
     success_message = 'Date added successfully'
@@ -124,8 +132,11 @@ class ClosedCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     
     def get_success_url(self):
         return reverse('closed_detail', args=[self.object.pk])
+    
+    def test_func(self):
+        return self.request.user.is_staff
 
-class ClosedUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+class ClosedUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Closed
     context_object_name = 'dates'
     template_name = 'booking/closed_update_form.html'
@@ -138,8 +149,11 @@ class ClosedUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('closed_detail', args=[self.object.pk])
+    
+    def test_func(self):
+        return self.request.user.is_staff
 
-class ClosedDeleteView(LoginRequiredMixin, DeleteView):
+class ClosedDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Closed
     template_name = 'booking/closed_delete.html'
     success_message = 'Date deleted successfully!'
@@ -148,6 +162,9 @@ class ClosedDeleteView(LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super(ClosedDeleteView, self).delete(request, *args, **kwargs)
+    
+    def test_func(self):
+        return self.request.user.is_staff
 
 class CustomerBookingListView(LoginRequiredMixin, ListView):
     model = TimeSlot
