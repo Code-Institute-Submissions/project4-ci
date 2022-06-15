@@ -4,8 +4,7 @@
   }
 
 .main-jumbo {
-    background-image: url("images/party.jpeg");
-    height:400px;
+    background-image: url("images/jumbo.jpg");
     overflow: hidden;
     background-repeat: no-repeat;
     background-size: cover;
@@ -22,7 +21,14 @@ a {
 }
 
 #logo {
-  font-style: italic;
-  font-size: 150%;
-  padding-left: 10px;
+  font-weight: 600;
+  font-size: 200%;
+  padding-left: 20px;
 }
+
+nav {
+  font-weight: 400;
+  font-size: 150%;
+}
+
+

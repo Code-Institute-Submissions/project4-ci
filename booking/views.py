@@ -80,7 +80,6 @@ def booking_detail(request):
                         number_of_people=number_of_people
                         )
         form.save()
-        # return redirect('customer_booking_list')
         messages.success(request, 'Booking created successfully!')
         return redirect(reverse('customer_booking_detail', kwargs={'pk':form.id} ))
 
