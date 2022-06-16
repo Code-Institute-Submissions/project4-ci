@@ -10,8 +10,9 @@
 <form method="post" class="from-control ">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save" class="btn btn-success">
+    <a href="{% url 'closed_list' %}" class="btn btn-danger">Cancel</a>
 </form>
-<a href="{% url 'closed_list' %}" class="btn btn-danger">Cancel</a>
+
 </div>
 </div>
 {% else %}

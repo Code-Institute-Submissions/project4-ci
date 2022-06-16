@@ -18,12 +18,16 @@ from django.contrib.admin.views.decorators import staff_member_required
 @login_required
 def booking_day(request):
     current_user = request.user
+    page_title = 'Booking'
     user = User.objects.get(id=current_user.id)
     bookings = TimeSlot.objects.filter(user=user)
-    return render(request, 'booking/booking_day.html', {'bookings': bookings})
+    return render(request, 'booking/booking_day.html', {'bookings': bookings,
+                                                        'page_title': page_title
+                                                        })
 
 @login_required
 def booking_detail(request):
+    page_title = 'Booking'
     date = request.GET.get('date')
     bookings = TimeSlot.objects.filter(date=date)
     days = Closed.objects.all()
@@ -89,18 +93,24 @@ def booking_detail(request):
                   {'bookings': bookings,
                    'date': date,
                    'times': times,
-                   'closed_days': closed_days
+                   'closed_days': closed_days,
+                   'page_title': page_title
                    })
 @staff_member_required
 def booking_date(request):
-    return render(request, 'booking/booking_date.html')
+    page_title = 'Booking'
+    return render(request, 'booking/booking_date.html', {'page_title': page_title})
 
 @staff_member_required
 def booking_date_list(request):
+    page_title = 'Booking'
     date = request.GET.get('date')
     bookings = TimeSlot.objects.filter(date=date)
 
-    return render(request, 'booking/booking_date_list.html', {'bookings': bookings,'date': date})
+    return render(request, 'booking/booking_date_list.html', {'bookings': bookings,
+                                                              'date': date,
+                                                              'page_title': page_title
+                                                              })
 
     
 class ClosedListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
@@ -111,6 +121,11 @@ class ClosedListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     def test_func(self):
         return self.request.user.is_staff
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Booking'
+        return context
+
 class ClosedDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Closed
     context_object_name = 'dates'
@@ -118,6 +133,11 @@ class ClosedDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
     def test_func(self):
         return self.request.user.is_staff
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Booking'
+        return context
 
 
 class ClosedCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -135,6 +155,11 @@ class ClosedCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMi
     
     def test_func(self):
         return self.request.user.is_staff
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Booking'
+        return context
 
 class ClosedUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Closed
@@ -153,6 +178,11 @@ class ClosedUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMi
     def test_func(self):
         return self.request.user.is_staff
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Booking'
+        return context
+
 class ClosedDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Closed
     template_name = 'booking/closed_delete.html'
@@ -166,15 +196,30 @@ class ClosedDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         return self.request.user.is_staff
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Booking'
+        return context
+
 class CustomerBookingListView(LoginRequiredMixin, ListView):
     model = TimeSlot
     context_object_name = 'timeslots'
     template_name = 'booking/customer_booking_list.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Booking'
+        return context
+
 class CustomerBookingDetailView(LoginRequiredMixin, DetailView):
     model = TimeSlot
     context_object_name = 'timeslots'
     template_name = 'booking/customer_booking_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Booking'
+        return context
 
 class BookingDeleteView(LoginRequiredMixin, DeleteView):
     model = TimeSlot
@@ -185,3 +230,8 @@ class BookingDeleteView(LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super(BookingDeleteView, self).delete(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Booking'
+        return context

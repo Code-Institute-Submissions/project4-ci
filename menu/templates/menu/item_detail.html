@@ -8,9 +8,9 @@
             {% if user.is_staff %}
 <h1>Details</h1>
 <h2> {{ object.title }} </h2>
-<p>Course {{ object.course }}</p>
+<p>Course: {{ object.get_course_display }}</p>
 <p>{{ object.description }}</p>
-<p>Price {{ object.price}}</p>
+<p>Price: £{{ object.price}}</p>
 <a href="{% url 'menu_list' %}" class="btn btn-primary btn-sm">Back to Menu List</a>
 <a href="{% url 'item_update_form' object.id %}" class="btn btn-success btn-sm">Edit</a>
 <a href="{% url 'item_delete' object.id %}" class="btn btn-danger btn-sm">Delete</a>

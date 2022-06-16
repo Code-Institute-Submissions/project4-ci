@@ -10,10 +10,14 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 
 def food_menu(request):
+    page_title = "Menu"
     starters = FoodMenu.objects.filter(course=0)
     mains = FoodMenu.objects.filter(course=1)
     desserts = FoodMenu.objects.filter(course=2)
-    return render(request, 'menu/menu_page.html', {'starters': starters, 'mains': mains, 'desserts': desserts})
+    return render(request, 'menu/menu_page.html', {'starters': starters,
+                                                   'mains': mains,
+                                                   'desserts': desserts,
+                                                   'page_title': page_title})
 
 class MenuListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = FoodMenu
@@ -22,6 +26,11 @@ class MenuListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     
     def test_func(self):
         return self.request.user.is_staff
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Menu'
+        return context
 
 class MenuDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = FoodMenu
@@ -30,6 +39,11 @@ class MenuDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
     def test_func(self):
         return self.request.user.is_staff
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Menu'
+        return context
 
 
 class MenuCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -48,6 +62,11 @@ class MenuCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixi
     
     def get_success_url(self):
         return reverse('item_detail', args=[self.object.pk])
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Menu'
+        return context
 
 class MenuUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = FoodMenu
@@ -66,6 +85,11 @@ class MenuUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixi
 
     def get_success_url(self):
         return reverse('item_detail', args=[self.object.pk])
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Menu'
+        return context
 
 
 class MenuDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -80,3 +104,8 @@ class MenuDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         return self.request.user.is_staff
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Menu'
+        return context

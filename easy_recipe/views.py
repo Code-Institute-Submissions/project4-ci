@@ -12,6 +12,11 @@ class RecipeListView(LoginRequiredMixin, ListView):
     model = RecipePost
     context_object_name = 'recipes'
     template_name = 'easy_recipe/recipes.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Recipes'
+        return context
     
 
 
@@ -19,6 +24,11 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
     model = RecipePost
     context_object_name = 'recipe'
     template_name = 'easy_recipe/recipe_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Recipes'
+        return context
 
 
 class RecipeCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -38,6 +48,11 @@ class RecipeCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMi
     def test_func(self):
         return self.request.user.is_staff
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Recipes'
+        return context
+
 class RecipeUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = RecipePost 
     context_object_name = 'recipe'
@@ -56,6 +71,11 @@ class RecipeUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMi
     def test_func(self):
         return self.request.user.is_staff
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Recipes'
+        return context
+
 
 class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = RecipePost
@@ -69,3 +89,8 @@ class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
     def test_func(self):
         return self.request.user.is_staff
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Recipes'
+        return context
