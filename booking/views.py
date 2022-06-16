@@ -85,9 +85,13 @@ def booking_detail(request):
                         phone=phone,
                         number_of_people=number_of_people
                         )
-        form.save()
-        messages.success(request, 'Booking created successfully!')
-        return redirect(reverse('customer_booking_detail', kwargs={'pk':form.id} ))
+        final_check = TimeSlot.objects.filter(date=date, time=time)
+        if len(final_check) < 5:
+            form.save()
+            messages.success(request, 'Booking created successfully!')
+            return redirect(reverse('customer_booking_detail', kwargs={'pk':form.id} ))
+        else:
+            messages.success(request, 'Sorry that time is fully booked please choose another time')
 
     return render(request, 'booking/booking_detail.html', 
                   {'bookings': bookings,
