@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from .models import TimeSlot, Closed
+from .forms import TimeSlotForm
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.admin.views.decorators import staff_member_required
 
@@ -27,6 +28,7 @@ def booking_day(request):
 
 @login_required
 def booking_detail(request):
+    new_form = TimeSlotForm
     page_title = 'Booking'
     date = request.GET.get('date')
     bookings = TimeSlot.objects.filter(date=date)
@@ -98,7 +100,8 @@ def booking_detail(request):
                    'date': date,
                    'times': times,
                    'closed_days': closed_days,
-                   'page_title': page_title
+                   'page_title': page_title,
+                   'new_form': new_form
                    })
 @staff_member_required
 def booking_date(request):
