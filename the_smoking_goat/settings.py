@@ -28,7 +28,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['the-smoking-goat.herokuapp.com', 'localhost']
 
@@ -185,5 +185,5 @@ EMAIL_HOST_USER = 'thesmokinggoat7@gmail.com'
 EMAIL_HOST_PASSWORD = 'mywagwoord'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
