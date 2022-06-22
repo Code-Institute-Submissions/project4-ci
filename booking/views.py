@@ -8,7 +8,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from .models import TimeSlot, Closed
-from .forms import TimeSlotForm
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.admin.views.decorators import staff_member_required
 
