@@ -1,4 +1,4 @@
-{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name %}Hello from The Smoking Goat!{% endblocktrans %}
+{% load i18n %}{% autoescape off %}{% blocktrans %}Hello from The Smoking Goat!{% endblocktrans %}
 
 {% block content %}{% endblock %}
 
