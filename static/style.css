@@ -4,7 +4,7 @@
   }
 
 .main-jumbo {
-    background-image: url('/images/jumbo.jpg');
+    background-image: url('../static/images/jumbo.jpg');
     overflow: hidden;
     background-repeat: no-repeat;
     background-size: cover;
@@ -29,6 +29,10 @@ a {
 nav {
   font-weight: 400;
   font-size: 150%;
+}
+
+starters-img {
+  width: auto;
 }
 
 

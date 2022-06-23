@@ -6,18 +6,20 @@
         <div class="col text-center">
 <h1>Menu</h1>
 <div class="row">
-    <div class="col">
-<h2>Starters</h2>
+    <div class="col-6">
+<h2 class="mt-5">Starters</h2>
 {% for starter in starters %}
 <h4> {{starter.title}} </h4>
 <p> {{starter.description}} </p>
 <p>Price £ {{starter.price}}</p>
 {% endfor %}
 </div>
+<div class="col-6 starters-img"><img class="img-fluid mt-5 " src="{% static 'images/starters.jpg' %}" alt="salad"></div>
 </div>
 <div class="row">
+    <div class="col-6"><img class="img-fluid mt-5" src="{% static 'images/burger2.jpg' %}" alt="burger"></div>
     <div class="col-6">
-<h2>Mains</h2>
+<h2 class="mt-5">Mains</h2>
 {% for main in mains %}
 <h4> {{main.title}} </h4>
 <p> {{main.description}} </p>
@@ -26,13 +28,16 @@
 </div>
 </div>
 <div class="row">
-    <div class="col">
-<h2>Dessert</h2>
+    <div class="col-6">
+<h2 class="mt-5">Dessert</h2>
 {% for dessert in desserts %}
 <h4> {{dessert.title}} </h4>
 <p> {{dessert.description}} </p>
 <p>Price £ {{dessert.price}}</p>
 {% endfor %}
+</div>
+<div class="col-6">
+    <img class="img-fluid mt-5" src="{% static 'images/dessert.jpg' %}" alt="chocolate brownies">
 </div>
 </div>
 </div>
