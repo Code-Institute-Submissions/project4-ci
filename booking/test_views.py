@@ -28,7 +28,6 @@ class TestViews(TestCase):
     
     def test_get_booking_detail_page(self):
         self.client.login(username='john', password='johnpassword')
-        date = '2022-08-16'
         response = self.client.get(reverse('booking_detail'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'booking/booking_detail.html')
@@ -84,4 +83,5 @@ class TestViews(TestCase):
                                     {'day': '2022-12-25',
                                     'reason': 'Christmas day',
                                     'user': self.user})
-        self.assertRedirects(response, reverse(f'closed_detail/{self.object.id}'))
+        self.assertEqual(response.status_code, 302)
+        

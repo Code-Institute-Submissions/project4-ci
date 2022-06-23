@@ -47,21 +47,36 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'easy_recipe/recipe_create_form.html')
 
-    # def test_can_add_new_recipe(self):
-    #     self.client.login(username='admin', password='adminpassword')
-    #     response = self.client.post('/recipe_create_form', {'title': 'Test Added Item',
-    #                                 'author':'admin',
-    #                                 'content':'test'
-    #                                  })
-    #     self.assertRedirects(response, reverse('recipe_detail', kwargs=[self.object.id]))
+    def test_create_new_recipe(self):
+        self.client.login(username='admin', password='adminpassword')
+        items = RecipePost.objects.all()
+        self.assertEqual(len(items), 0)
+        response = self.client.post('/recipes/create_recipe',
+                                    {
+                                        'title': 'Test New Item check',
+                                        'author': self.user,
+                                        'content': 'New recipe',
+                                        'featured_image': ''
+                                    })
+        self.assertEqual(response.status_code, 302)
+        new_items = RecipePost.objects.all()
+        self.assertEqual(len(new_items), 1)
 
-    # def test_can_edit_recipe_item(self):
+       
+
+    # def test_edit_recipe_item(self):
+    #     """Function to check whether a menu item can be updated."""
     #     self.client.login(username='admin', password='adminpassword')
-    #     item = RecipePost.objects.create(title='Test Added Item',
-    #                                author= User.objects.get(id=current_user.id),
-    #                                content='test'
-    #                                 )
-    #     response = self.client.post(f'/recipe_update_form/{item.id}', {'name': 'Updated Name'})
-    #     self.assertRedirects(response, reverse('recipe_detail', kwargs=[item.id]))
-    #     update_item = RecipePost.objects.get(id=item.id)
-    #     self.assertEqual(update_item.name, 'Updated Name')
+    #     item = RecipePost.objects.create(title='Test Item',
+    #                                     content='New Item',
+    #                                     author=self.user
+    #                                     )
+    #     response = self.client.post(f'/recipes/recipe_update/{item.id}',
+    #                                 {
+    #                                     'title': 'Test Edit Item check',
+    #                                     'content': 'New Item',
+    #                                     'author': self.user
+    #                                 })
+    #     self.assertEqual(response.status_code, 200)
+    #     updated_item = RecipePost.objects.get(id=item.id)
+    #     self.assertEqual(updated_item.title, 'Test Edit Item check')

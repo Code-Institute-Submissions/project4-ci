@@ -1,5 +1,4 @@
 from django.shortcuts import render, reverse
-from . import views
 from .models import FoodMenu
 from django.urls import reverse_lazy
 from django.contrib import messages
