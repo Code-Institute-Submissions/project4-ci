@@ -89,4 +89,34 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 302)
         new_items = Closed.objects.all()
         self.assertEqual(len(new_items), 1)
+
+    def test_delete_closed(self):
+        """Function to check whether a closed day can be deleted."""
+        self.client.login(username='admin', password='adminpassword')
+        item = Closed.objects.create(day='2022-12-25',
+                                    reason='Christmas day',
+                                    user=self.user
+                                    )
+        existing_items = Closed.objects.filter(id=item.id)
+        self.assertEqual(len(existing_items), 1)
+        response = self.client.post(f'/booking/closed_delete/{item.id}')
+        self.assertEqual(response.status_code, 302)
+        existing_items = Closed.objects.filter(id=item.id)
+        self.assertEqual(len(existing_items), 0)
         
+    def test_edit_closed(self):
+        """Function to check whether a closed can be updated."""
+        self.client.login(username='admin', password='adminpassword')
+        item = Closed.objects.create(day='2022-12-25',
+                                    reason='Christmas day',
+                                    user=self.user
+                                    )
+        response = self.client.post(f'/booking/closed_update_form/{item.id}',
+                                    {
+                                        'day': '2022-12-25',
+                                        'reason': 'Christmas day Test',
+                                        'user': self.user.id,
+                                    })
+        self.assertEqual(response.status_code, 302)
+        updated_item = Closed.objects.get(id=item.id)
+        self.assertEqual(updated_item.reason, 'Christmas day Test')
