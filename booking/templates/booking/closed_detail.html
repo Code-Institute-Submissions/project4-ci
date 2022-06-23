@@ -4,13 +4,13 @@
 {% if user.is_staff %}
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col text-center">
             <h1>Details</h1>
             <p> <strong>Date: </strong> {{object.day}}</p>
             <p> <strong>Reason: </strong> {{object.reason}}</p>
             <a href="{% url 'closed_delete' object.id %}" class="btn btn-sm btn-danger">Delete</a>
             <a href="{% url 'closed_update_form' object.id %}" class="btn btn-sm btn-success">Edit</a>
-        </div>
+            <a href="{% url 'closed_list' %}" class="btn btn-sm btn-primary">Back</a>
     </div>
     {% else %}
     <div class="row">

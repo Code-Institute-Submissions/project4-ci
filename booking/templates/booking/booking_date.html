@@ -11,6 +11,7 @@
 <label for="date">Please choose a day</label>
 <input id="date" name="date" type="date" required><br>
 <input type="submit" class="btn btn-sm btn-success mt-3">
+<a class="btn btn-sm btn-primary mt-3" href="{% url 'booking_day' %}">Back</a>
 </form>
 {% else %}
 <h2>You do not have permission to access this information</h2>

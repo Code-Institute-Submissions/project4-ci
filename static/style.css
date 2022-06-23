@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Raleway:wght@300;400&family=Work+Sans:wght@400;500;800&display=swap');
+
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
+
 #goat {
     width: 75px;
     height: 75px;
@@ -29,10 +36,6 @@ a {
 nav {
   font-weight: 400;
   font-size: 150%;
-}
-
-starters-img {
-  width: auto;
 }
 
 
