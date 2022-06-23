@@ -4,7 +4,7 @@
   }
 
 .main-jumbo {
-    background-image: url("images/jumbo.jpg");
+    background-image: url('/images/jumbo.jpg');
     overflow: hidden;
     background-repeat: no-repeat;
     background-size: cover;
