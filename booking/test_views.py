@@ -79,9 +79,9 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'booking/closed_create_form.html')
 
-    # def test_can_post_closed_create_form(self):
-    #     response = self.client.post(reverse('closed_create_form'),
-    #                                 {'day': '2022-12-25',
-    #                                 'reason': 'Christmas day',
-    #                                 'user': self.user})
-    #     self.assertRedirects(response, reverse(f'closed_detail/{self.object.id}'))
+    def test_can_post_closed_create_form(self):
+        response = self.client.post(reverse('closed_create_form'),
+                                    {'day': '2022-12-25',
+                                    'reason': 'Christmas day',
+                                    'user': self.user})
+        self.assertRedirects(response, reverse(f'closed_detail/{self.object.id}'))
