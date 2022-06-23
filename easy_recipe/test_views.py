@@ -41,42 +41,56 @@ class TestViews(TestCase):
         response = self.client.get(reverse('create_recipe'))
         self.assertEqual(response.status_code, 403)
 
+    def test_get_recipe_delete_page_authorizes_user(self):
+        self.client.login(username='admin', password='adminpassword')
+        item = RecipePost.objects.create(title='Test Item',
+                                       content='New Item',
+                                       author=self.user,
+                                       featured_image='')
+        response = self.client.get(f'/recipes/recipe_delete/{item.id}')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'easy_recipe/recipe_delete.html')
+
     def test_get_recipe_create_page_authorizes_user(self):
         self.client.login(username='admin', password='adminpassword')
         response = self.client.get(reverse('create_recipe'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'easy_recipe/recipe_create_form.html')
 
-    def test_create_new_recipe(self):
-        self.client.login(username='admin', password='adminpassword')
-        items = RecipePost.objects.all()
-        self.assertEqual(len(items), 0)
-        response = self.client.post('/recipes/create_recipe',
-                                    {
-                                        'title': 'Test New Item check',
-                                        'author': self.user,
-                                        'content': 'New recipe',
-                                        'featured_image': ''
-                                    })
-        self.assertEqual(response.status_code, 302)
-        new_items = RecipePost.objects.all()
-        self.assertEqual(len(new_items), 1)
-
-       
-
-    # def test_edit_recipe_item(self):
-    #     """Function to check whether a menu item can be updated."""
+    # def test_create_new_recipe(self):
     #     self.client.login(username='admin', password='adminpassword')
-    #     item = RecipePost.objects.create(title='Test Item',
-    #                                     content='New Item',
-    #                                     author=self.user
-    #                                     )
-    #     response = self.client.post(f'/recipes/recipe_update/{item.id}',
-    #                                 {
-    #                                     'title': 'Test Edit Item check',
-    #                                     'content': 'New Item',
-    #                                     'author': self.user
-    #                                 })
-    #     self.assertEqual(response.status_code, 200)
-    #     updated_item = RecipePost.objects.get(id=item.id)
-    #     self.assertEqual(updated_item.title, 'Test Edit Item check')
+    #     items = RecipePost.objects.all()
+    #     self.assertEqual(len(items), 0)
+    #     response = self.client.post('/recipes/create_recipe',{'title':'Test',
+    #                                                           'author': self.user,
+    #                                                           'content':'Test',
+    #                                                           'featured_image': '',
+    #                                                           })
+    #     new_items = RecipePost.objects.all()
+    #     self.assertEqual(len(new_items), 1)
+
+    def test_get_edit_recipe_item_page(self):
+        self.client.login(username='admin', password='adminpassword')
+        item = RecipePost.objects.create(title='Test Item',
+                                       content='New Item',
+                                       author=self.user,
+                                       featured_image='')
+        response = self.client.get(f'/recipes/recipe_update/{item.id}')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'easy_recipe/recipe_update_form.html')
+
+    def test_delete_recipe(self):
+        """Function to check whether a recipe can be deleted."""
+        self.client.login(username='admin', password='adminpassword')
+        item = RecipePost.objects.create(title='Test Item',
+                                       content='New Item',
+                                       author=self.user,
+                                       featured_image='')
+        existing_items = RecipePost.objects.filter(id=item.id)
+        self.assertEqual(len(existing_items), 1)
+        response = self.client.post(f'/recipes/recipe_delete/{item.id}')
+        self.assertEqual(response.status_code, 302)
+        existing_items = RecipePost.objects.filter(id=item.id)
+        self.assertEqual(len(existing_items), 0)
+
+        
