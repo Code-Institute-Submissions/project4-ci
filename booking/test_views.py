@@ -53,6 +53,12 @@ class TestViews(TestCase):
         new_bookings = TimeSlot.objects.all()
         self.assertEqual(len(new_bookings), 1)
 
+    def test_get_booking_date_page(self):
+        self.client.login(username='admin', password='adminpassword')
+        response = self.client.get(reverse('booking_date'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'booking/booking_date.html')
+
 
     def test_get_booking_date_list_page_unauthorized(self):
         response = self.client.get(reverse('booking_date_list'))
