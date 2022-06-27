@@ -262,12 +262,12 @@ class CustomerBookingListView(LoginRequiredMixin, ListView):
     Get extra context: Passes extra context to the class based view to use
     """
     model = TimeSlot
-    context_object_name = 'timeslots'
     template_name = 'booking/customer_booking_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Booking'
+        context['timeslots'] = TimeSlot.objects.filter(user=self.request.user)
         return context
 
 class CustomerBookingDetailView(LoginRequiredMixin, DetailView):

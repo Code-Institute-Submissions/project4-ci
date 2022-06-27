@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-6 offset-3 text-center">
 <h1>Your bookings</h1>
-<ul class="list-group">
+<ul class="list-group"> 
     {% for timeslot in timeslots %}
    <li class="list-group-item">
        <a href="{% url 'customer_booking_detail' timeslot.id %}">{{timeslot.date}} {{timeslot.time}}</a>
