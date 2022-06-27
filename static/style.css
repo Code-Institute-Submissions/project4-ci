@@ -39,3 +39,6 @@ nav {
 }
 
 
+.social-footer li {
+  display: inline-block;
+}

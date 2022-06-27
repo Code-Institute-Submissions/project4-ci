@@ -9,6 +9,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 
 def food_menu(request):
+    """
+    Function renders menu page
+    """
     page_title = "Menu"
     starters = FoodMenu.objects.filter(course=0)
     mains = FoodMenu.objects.filter(course=1)
@@ -19,6 +22,12 @@ def food_menu(request):
                                                    'page_title': page_title})
 
 class MenuListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    """
+    Displays list of menu items
+    Extra context function: Gives extra context to 
+    be used by template
+    Test func: Tests if user is_staff
+    """
     model = FoodMenu
     context_object_name = 'fooditems'
     template_name = 'menu/menu_list.html'
@@ -32,6 +41,12 @@ class MenuListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return context
 
 class MenuDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    """
+    Displays detail of menu item
+    Extra context function: Gives extra context to 
+    be used by template
+    Test func: Tests if user is_staff
+    """
     model = FoodMenu
     context_object_name = 'fooditems'
     template_name = 'menu/item_detail.html'
@@ -46,6 +61,14 @@ class MenuDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
 
 class MenuCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """
+    Displays form to create new menu item
+    Extra context function: Gives extra context to 
+    be used by template
+    Test func: Tests if user is_staff
+    Get success func: Gets id of object created and returns 
+    detail view url of item
+    """
     model = FoodMenu
     template_name = 'menu/item_create_form.html'
     success_message = 'New menu item created successfully'
@@ -68,6 +91,14 @@ class MenuCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixi
         return context
 
 class MenuUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    """
+    Displays form to update/edit menu item
+    Extra context function: Gives extra context to 
+    be used by template
+    Test func: Tests if user is_staff
+    Get success func: Gets id of object created and returns 
+    detail view url of item
+    """
     model = FoodMenu
     context_object_name = 'fooditems'
     template_name = 'menu/item_update_form.html'
@@ -92,6 +123,15 @@ class MenuUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixi
 
 
 class MenuDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """
+    Deletes menu item in database
+    Extra context function: Gives extra context to 
+    be used by template
+    Test func: Tests if user is_staff
+    Get success func: Gets id of object created and returns 
+    detail view url of item
+    def delete: displays message item was deleted
+    """
     model = FoodMenu
     template_name = 'menu/item_delete.html'
     success_message = 'Menu item deleted successfully'

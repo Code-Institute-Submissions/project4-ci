@@ -3,7 +3,10 @@ from .models import TimeSlot, Closed
 
 @admin.register(TimeSlot)
 class TimeslotAdmin(admin.ModelAdmin):
-
+    """
+    Registering the Timeslot database in the admin panel.
+    Setting list display and filter items
+    """
     list_filter = ('date',
                    'time',
                    'first_name',
@@ -22,6 +25,10 @@ class TimeslotAdmin(admin.ModelAdmin):
     
 @admin.register(Closed)
 class ClosedAdmin(admin.ModelAdmin):
+    """
+    Registering the Closed database in the admin panel.
+    Setting list display and filter items
+    """
 
     list_filter = ('day', 'reason', 'user')
     list_display = ('user', 'day', 'reason')

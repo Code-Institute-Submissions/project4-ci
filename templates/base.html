@@ -56,11 +56,11 @@
           {% endif %}
         </ul>
         {% if user.is_authenticated %}
-        <div class="col text-end">
+        <div class="col text-end ">
           <a href="{% url 'account_logout' %}" type="button" class="btn btn-outline-primary me-2">Logout</a>
         </div>
         {% else %}
-        <div class="col text-end">
+        <div class="col text-end justify-content-sm-center">
           <a href="{% url 'account_login' %}" type="button" class="btn btn-outline-primary me-2">Login</a>
           <a href="{% url 'account_signup' %}" type="button" class="btn btn-primary">Sign-up</a>
           {% endif %}
@@ -98,9 +98,9 @@
           <div class="col text-center">
             <h5>Social Links</h5>
             <ul class="nav flex-column">
-              <li class="nav-item mb-2"><a  href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Visit our Facebook page(opens in a new tab) class="nav-link p-0 text-muted"><i class="fab fa-facebook-square"></i></a></li>
-              <li class="nav-item mb-2"><a class="nav-link p-0 text-muted" href="https://www.Instagram.com" target="_blank" rel="noopener" aria-label="Visit our Facebook page(opens in a new tab)"><i class="fab fa-instagram-square"></i></a></li>
-              <li class="nav-item mb-2"><a class="nav-link p-0 text-muted" href="https://www.twitter.com" target="_blank" rel="noopener" aria-label="Visit our Facebook page(opens in a new tab)"><i class="fab fa-twitter-square"></i></a></li>
+              <li class="nav-item mb-2 "><a  href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Visit our Facebook page(opens in a new tab) class="nav-link p-0 text-muted"><i class="fab fa-facebook-square display-5"></i></a></li>
+              <li class="nav-item mb-2 "><a class="nav-link p-0 text-muted" href="https://www.Instagram.com" target="_blank" rel="noopener" aria-label="Visit our Facebook page(opens in a new tab)"><i class="fab fa-instagram-square display-5"></i></a></li>
+              <li class="nav-item mb-2 "><a class="nav-link p-0 text-muted" href="https://www.twitter.com" target="_blank" rel="noopener" aria-label="Visit our Facebook page(opens in a new tab)"><i class="fab fa-twitter-square display-5"></i></a></li>
             
             </ul>
           </div>

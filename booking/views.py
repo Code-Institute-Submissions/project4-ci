@@ -17,6 +17,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 @login_required
 def booking_day(request):
+    """
+    Function to render booking day page. Additional context page_title
+    to display name in title and bookings - gets all bookings of user
+    """
     current_user = request.user
     page_title = 'Booking'
     user = User.objects.get(id=current_user.id)
@@ -27,6 +31,14 @@ def booking_day(request):
 
 @login_required
 def booking_detail(request):
+    """
+    Function to render Booking detail page. Gets date from booking_day
+    page.Checks if date is a Closed day if true displays message. If not 
+    closed day get all booking on that day. Counts all bookings at times. 
+    If time displays 5 times it removes the time choice and only displays 
+    available times. Final check to see if time is still available and if 
+    user did not alter time before posting
+    """
     page_title = 'Booking'
     date = request.GET.get('date')
     bookings = TimeSlot.objects.filter(date=date)
@@ -101,13 +113,21 @@ def booking_detail(request):
                    'closed_days': closed_days,
                    'page_title': page_title
                    })
+
 @staff_member_required
 def booking_date(request):
+    """
+    Function to render booking_date page. Addition context page_title
+    to display in title
+    """
     page_title = 'Booking'
     return render(request, 'booking/booking_date.html', {'page_title': page_title})
 
 @staff_member_required
 def booking_date_list(request):
+    """
+    Function to render booking_date_list for staff
+    """
     page_title = 'Booking'
     date = request.GET.get('date')
     bookings = TimeSlot.objects.filter(date=date)
@@ -119,6 +139,11 @@ def booking_date_list(request):
 
     
 class ClosedListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    """
+    Displays a list of the closed days
+    Test_fun: tests if user is a staff member
+    Get extra context: Passes extra context to the class based view to use
+    """
     model = Closed
     context_object_name = 'dates'
     template_name = 'booking/closed_list.html'
@@ -132,6 +157,11 @@ class ClosedListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return context
 
 class ClosedDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    """
+    Displays the detail of the selected closed day
+    Test_fun: tests if user is a staff member
+    Get extra context: Passes extra context to the class based view to use
+    """
     model = Closed
     context_object_name = 'dates'
     template_name = 'booking/closed_detail.html'
@@ -146,6 +176,13 @@ class ClosedDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
 
 class ClosedCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """
+    Displays form to create new closed day
+    Test_fun: tests if user is a staff member
+    Get extra context: Passes extra context to the class based view to use
+    Get Success url: gets primary key of closed day created and turns success
+    url, detail view of item just created
+    """
     model = Closed 
     template_name = 'booking/closed_create_form.html'
     success_message = 'Date added successfully'
@@ -167,6 +204,13 @@ class ClosedCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMi
         return context
 
 class ClosedUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    """
+    Displays form to edit closed day chosed
+    Test_fun: tests if user is a staff member
+    Get extra context: Passes extra context to the class based view to use
+    Get Success url: gets primary key of closed day created and turns success
+    url, detail view of item just created
+    """
     model = Closed
     context_object_name = 'dates'
     template_name = 'booking/closed_update_form.html'
@@ -189,6 +233,12 @@ class ClosedUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMi
         return context
 
 class ClosedDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """
+    Deletes closed day chosen
+    Test_fun: tests if user is a staff member
+    Get extra context: Passes extra context to the class based view to use
+    Def delete: displays message item was deleted
+    """
     model = Closed
     template_name = 'booking/closed_delete.html'
     success_message = 'Date deleted successfully!'
@@ -207,6 +257,10 @@ class ClosedDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return context
 
 class CustomerBookingListView(LoginRequiredMixin, ListView):
+    """
+    Displays a list of the customer bookings
+    Get extra context: Passes extra context to the class based view to use
+    """
     model = TimeSlot
     context_object_name = 'timeslots'
     template_name = 'booking/customer_booking_list.html'
@@ -217,6 +271,10 @@ class CustomerBookingListView(LoginRequiredMixin, ListView):
         return context
 
 class CustomerBookingDetailView(LoginRequiredMixin, DetailView):
+    """
+    Displays details of the customer booking
+    Get extra context: Passes extra context to the class based view to use
+    """
     model = TimeSlot
     context_object_name = 'timeslots'
     template_name = 'booking/customer_booking_detail.html'
@@ -227,6 +285,11 @@ class CustomerBookingDetailView(LoginRequiredMixin, DetailView):
         return context
 
 class BookingDeleteView(LoginRequiredMixin, DeleteView):
+    """
+    Deletes booking chosen
+    Get extra context: Passes extra context to the class based view to use
+    Def delete: displays message item was deleted
+    """
     model = TimeSlot
     template_name = 'booking/customer_booking_delete.html'
     success_message = 'Date deleted successfully!'

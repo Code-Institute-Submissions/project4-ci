@@ -9,6 +9,11 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 
 class RecipeListView(LoginRequiredMixin, ListView):
+    """
+    Displays a list of the recipes in database
+    Extra context function: Gives extra context to 
+    be used by template
+    """
     model = RecipePost
     context_object_name = 'recipes'
     template_name = 'easy_recipe/recipes.html'
@@ -21,6 +26,11 @@ class RecipeListView(LoginRequiredMixin, ListView):
 
 
 class RecipeDetailView(LoginRequiredMixin, DetailView):
+    """
+    Displays detail of recipe in database
+    Extra context function: Gives extra context to 
+    be used by template
+    """
     model = RecipePost
     context_object_name = 'recipe'
     template_name = 'easy_recipe/recipe_detail.html'
@@ -32,6 +42,14 @@ class RecipeDetailView(LoginRequiredMixin, DetailView):
 
 
 class RecipeCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """
+    Displays form to create a recipe in database
+    Extra context function: Gives extra context to 
+    be used by template
+    Test func: Tests if user is_staff
+    Get success func: Gets id of object created and returns 
+    detail view url of item
+    """
     model = RecipePost 
     template_name = 'easy_recipe/recipe_create_form.html'
     success_message = 'New recipe created successfully'
@@ -54,6 +72,14 @@ class RecipeCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMi
         return context
 
 class RecipeUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    """
+    Displays form to update/edit a recipe in database
+    Extra context function: Gives extra context to 
+    be used by template
+    Test func: Tests if user is_staff
+    Get success func: Gets id of object created and returns 
+    detail view url of item
+    """
     model = RecipePost 
     context_object_name = 'recipe'
     template_name = 'easy_recipe/recipe_update_form.html'
@@ -78,6 +104,15 @@ class RecipeUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMi
 
 
 class RecipeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """
+    Deletes recipe in database
+    Extra context function: Gives extra context to 
+    be used by template
+    Test func: Tests if user is_staff
+    Get success func: Gets id of object created and returns 
+    detail view url of item
+    def delete: displays message item was deleted
+    """
     model = RecipePost
     template_name = 'easy_recipe/recipe_delete.html'
     success_message = 'Recipe deleted successfully!'
