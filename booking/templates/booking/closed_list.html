@@ -2,9 +2,9 @@
 {% load static %}
 {% block content %}
 {% if user.is_staff %}
-<div class="container">
+<div class="container mb-4">
     <div class="row">
-        <div class="col-6 offset-3 text-center">
+        <div class="col-10 offset-1 text-center">
 <h1>Closed Dates</h1>
 <ul class="list-group">
 {% for date in dates %}

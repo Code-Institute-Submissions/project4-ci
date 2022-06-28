@@ -1,6 +1,7 @@
 from django.contrib import admin
 from . models import RecipePost
 
+
 @admin.register(RecipePost)
 class RecipeAdmin(admin.ModelAdmin):
     """

@@ -12,9 +12,6 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.admin.views.decorators import staff_member_required
 
 
-
-
-
 @login_required
 def booking_day(request):
     """
@@ -25,18 +22,20 @@ def booking_day(request):
     page_title = 'Booking'
     user = User.objects.get(id=current_user.id)
     bookings = TimeSlot.objects.filter(user=user)
-    return render(request, 'booking/booking_day.html', {'bookings': bookings,
-                                                        'page_title': page_title
-                                                        })
+    return render(request,
+                  'booking/booking_day.html',
+                  {'bookings': bookings,
+                   'page_title': page_title})
+
 
 @login_required
 def booking_detail(request):
     """
     Function to render Booking detail page. Gets date from booking_day
-    page.Checks if date is a Closed day if true displays message. If not 
-    closed day get all booking on that day. Counts all bookings at times. 
-    If time displays 5 times it removes the time choice and only displays 
-    available times. Final check to see if time is still available and if 
+    page.Checks if date is a Closed day if true displays message. If not
+    closed day get all booking on that day. Counts all bookings at times.
+    If time displays 5 times it removes the time choice and only displays
+    available times. Final check to see if time is still available and if
     user did not alter time before posting
     """
     page_title = 'Booking'
@@ -47,11 +46,10 @@ def booking_detail(request):
     days = Closed.objects.all()
     for day in days:
         closed_days.append(day.day.strftime("%Y-%m-%d"))
-    
     if len(bookings) > 0:
-            times = ['12:00', '13:00','14:00',
-                '15:00', '16:00', '17:00',
-                '18:00', '19:00', '20:00']
+            times = ['12:00', '13:00', '14:00',
+                     '15:00', '16:00', '17:00',
+                     '18:00', '19:00', '20:00']
         # get times that is booked for date add them to list
             booked_times = []
             for booking in bookings:
@@ -70,15 +68,14 @@ def booking_detail(request):
                     index_of = (counter-1)
                     time.append(str(booked_times[index_of]))
             time = list(dict.fromkeys(time))
-            
         # removes times that is not available
             for slot in time:
                 if slot in times:
                     times.remove(slot)
     else:
         times = ['12:00', '13:00', '14:00',
-                '15:00', '16:00', '17:00',
-                '18:00', '19:00', '20:00']
+                 '15:00', '16:00', '17:00',
+                 '18:00', '19:00', '20:00']
 
     if request.method == 'POST':
         current_user = request.user
@@ -98,21 +95,22 @@ def booking_detail(request):
                         number_of_people=number_of_people
                         )
         final_check = TimeSlot.objects.filter(date=date, time=time)
-        
         if len(final_check) < 5 and time in times:
             form.save()
             messages.success(request, 'Booking created successfully!')
-            return redirect(reverse('customer_booking_detail', kwargs={'pk':form.id} ))
+            return redirect(reverse('customer_booking_detail',
+                                    kwargs={'pk': form.id}))
         else:
-            messages.success(request, 'Sorry can you please choose another time')
+            pass
 
-    return render(request, 'booking/booking_detail.html', 
+    return render(request, 'booking/booking_detail.html',
                   {'bookings': bookings,
                    'date': date,
                    'times': times,
                    'closed_days': closed_days,
                    'page_title': page_title
                    })
+
 
 @staff_member_required
 def booking_date(request):
@@ -121,7 +119,10 @@ def booking_date(request):
     to display in title
     """
     page_title = 'Booking'
-    return render(request, 'booking/booking_date.html', {'page_title': page_title})
+    return render(request,
+                  'booking/booking_date.html',
+                  {'page_title': page_title})
+
 
 @staff_member_required
 def booking_date_list(request):
@@ -132,12 +133,13 @@ def booking_date_list(request):
     date = request.GET.get('date')
     bookings = TimeSlot.objects.filter(date=date)
 
-    return render(request, 'booking/booking_date_list.html', {'bookings': bookings,
-                                                              'date': date,
-                                                              'page_title': page_title
-                                                              })
+    return render(request,
+                  'booking/booking_date_list.html',
+                  {'bookings': bookings,
+                   'date': date,
+                   'page_title': page_title})
 
-    
+
 class ClosedListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     """
     Displays a list of the closed days
@@ -155,6 +157,7 @@ class ClosedListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Booking'
         return context
+
 
 class ClosedDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     """
@@ -175,7 +178,10 @@ class ClosedDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
         return context
 
 
-class ClosedCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class ClosedCreateView(SuccessMessageMixin,
+                       LoginRequiredMixin,
+                       UserPassesTestMixin,
+                       CreateView):
     """
     Displays form to create new closed day
     Test_fun: tests if user is a staff member
@@ -183,27 +189,31 @@ class ClosedCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMi
     Get Success url: gets primary key of closed day created and turns success
     url, detail view of item just created
     """
-    model = Closed 
+    model = Closed
     template_name = 'booking/closed_create_form.html'
     success_message = 'Date added successfully'
     fields = [
         'day',
         'reason',
-        'user', 
+        'user',
         ]
-    
+
     def get_success_url(self):
         return reverse('closed_detail', args=[self.object.pk])
-    
+
     def test_func(self):
         return self.request.user.is_staff
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Booking'
         return context
 
-class ClosedUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+
+class ClosedUpdateView(SuccessMessageMixin,
+                       LoginRequiredMixin,
+                       UserPassesTestMixin,
+                       UpdateView):
     """
     Displays form to edit closed day chosed
     Test_fun: tests if user is a staff member
@@ -223,7 +233,7 @@ class ClosedUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMi
 
     def get_success_url(self):
         return reverse('closed_detail', args=[self.object.pk])
-    
+
     def test_func(self):
         return self.request.user.is_staff
 
@@ -231,6 +241,7 @@ class ClosedUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMi
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Booking'
         return context
+
 
 class ClosedDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     """
@@ -243,11 +254,11 @@ class ClosedDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     template_name = 'booking/closed_delete.html'
     success_message = 'Date deleted successfully!'
     success_url = reverse_lazy('closed_list')
-    
+
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super(ClosedDeleteView, self).delete(request, *args, **kwargs)
-    
+
     def test_func(self):
         return self.request.user.is_staff
 
@@ -255,6 +266,7 @@ class ClosedDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context['page_title'] = 'Booking'
         return context
+
 
 class CustomerBookingListView(LoginRequiredMixin, ListView):
     """
@@ -270,6 +282,7 @@ class CustomerBookingListView(LoginRequiredMixin, ListView):
         context['timeslots'] = TimeSlot.objects.filter(user=self.request.user)
         return context
 
+
 class CustomerBookingDetailView(LoginRequiredMixin, DetailView):
     """
     Displays details of the customer booking
@@ -284,6 +297,7 @@ class CustomerBookingDetailView(LoginRequiredMixin, DetailView):
         context['page_title'] = 'Booking'
         return context
 
+
 class BookingDeleteView(LoginRequiredMixin, DeleteView):
     """
     Deletes booking chosen
@@ -294,7 +308,7 @@ class BookingDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'booking/customer_booking_delete.html'
     success_message = 'Date deleted successfully!'
     success_url = reverse_lazy('customer_booking_list')
-    
+
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super(BookingDeleteView, self).delete(request, *args, **kwargs)

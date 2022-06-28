@@ -1,28 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="container">
+<div class="container mb-4">
     <div class="row">
         <div class="col">
-<h1>{{ recipe.title }}</h1>
-<h2>By {{ recipe.author }} </h2>
-<div class="d-none d-md-block col-md-6 masthead-image">
-    <!-- The featured image URL goes in the src attribute -->
-    {% if "placeholder" in post.featured_image.url %}
-    <img src="{% static 'images/cooking.jpg' %}" width="100%">
-    {% else %}
-    <img src=" {{ recipe.featured_image.url }}" width="100%">
-    {% endif %}
-</div>
-<p>
-    {{ recipe.content|linebreaks }}
-</p>
-{% if user.is_staff %}
-    <a href="{% url 'recipe_update' recipe.id %}" class="btn btn-success">Edit</a>
-    <a href="{% url 'recipe_delete' recipe.id %}" class="btn btn-danger">Delete</a>
-{% endif %}
-<a href="{% url 'recipes' %}" class="btn btn-primary">Back to Recipes</a>
-</div>
-</div>
+            <h1>{{ recipe.title }}</h1>
+            <h2>By {{ recipe.author }} </h2>
+            <div class="d-none d-md-block col-md-6 img-fluid">
+                {% if "placeholder" in post.featured_image.url %}
+                <img src="{% static 'images/cooking.jpg' %}" width="100%" alt="recipe image">
+                {% else %}
+                <img src=" {{ recipe.featured_image.url }}" width="100%" alt="recipe image">
+                {% endif %}
+            </div>
+            {{ recipe.content|linebreaks }}
+            {% if user.is_staff %}
+            <a href="{% url 'recipe_update' recipe.id %}" class="btn btn-success">Edit</a>
+            <a href="{% url 'recipe_delete' recipe.id %}" class="btn btn-danger">Delete</a>
+            {% endif %}
+            <a href="{% url 'recipes' %}" class="btn btn-primary ">Back to Recipes</a>
+        </div>
+    </div>
 </div>
 {% endblock %}

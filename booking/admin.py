@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import TimeSlot, Closed
 
+
 @admin.register(TimeSlot)
 class TimeslotAdmin(admin.ModelAdmin):
     """
@@ -14,7 +15,7 @@ class TimeslotAdmin(admin.ModelAdmin):
                    'number_of_people',
                    'phone'
                    )
-    list_display = ('date', 
+    list_display = ('date',
                     'time',
                     'first_name',
                     'last_name',
@@ -22,7 +23,8 @@ class TimeslotAdmin(admin.ModelAdmin):
                     'phone'
                     )
     search_fields = ['time', 'day', 'last_name']
-    
+
+
 @admin.register(Closed)
 class ClosedAdmin(admin.ModelAdmin):
     """
