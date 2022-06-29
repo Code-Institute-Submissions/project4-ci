@@ -1,10 +1,10 @@
-<h1 align="center">The Smoking Goat</h1>
+
+ <h1 align="center"><img src="static/images/goat.png" width="75" style="padding:0 20px" >The Smoking Goat</h1>
 
 [View the live project here](https://the-smoking-goat.herokuapp.com/)
 
 The Smoking Goat is a website for a restaurant that allows bookings to be made by registered users. It also allows users access to recipes created by the chef. The website allows staff to update the menu, add or remove items. Staff members can also  edit, delete or create new recipes on the site without accessing the admin panel. The staff also has access to a list of bookings for a given day and can add, edit or delete days that the restaurant is not open ex. Christmas day.
 
-![Mockup]()
 
 ## Index – Table of Contents
 * [User Experience (UX)](#user-experience-ux) 
@@ -20,10 +20,10 @@ The Smoking Goat is a website for a restaurant that allows bookings to be made b
 
 ### User stories :
 
-* US01: Illustrate purpose of application through UI
+* US01:Display purpose of application through UI
   - As a **Site User** I can **view the landing page** so that **I can determine the purpose of the application**
 * US02: Navigate site
-  - As a **Site User** I can **navigate using the menu** so that **I can easily access application functionality**
+  - As a **Site User** I can **navigate using the navigation links** so that **I can easily access application functionality**
 * US03: View menu
   - As a **Site User** I can **view the menu of the restaurant** so that **I can see all the options available and the prices**
 * US04: Register/Login
@@ -158,55 +158,64 @@ The Smoking Goat is a website for a restaurant that allows bookings to be made b
 ## Design
 
 -   ### Wireframes
+Balsamiq was used to create the wire frames for the project and was used as a guide for the project
+![Home](static/images/home_wireframe.jpg)
+![Menu](static/images/menu_wireframe.jpg)
+![Booking](static/images/booking_day_wf.jpg)
+![Recipes](static/images/recipe_wf.jpg)
+![Recipe Detail](static/images/recipe_detailwf.jpg)
 
-    The wireframe diagrams below describe the Home, Hike Detail, My Bookings, Sign in, Sign out and Register pages.  Wireframes are not provided for the Django Admin pages used by the application to create data records, publish hike data, approve comments and bookings.
 
-    <details>
-    <summary>Desktop Wireframes</summary>
+**Database Design**
 
-    ![Desktop Wireframes](documentation/wireframes/desktop.png)
-    </details>
-    <details>
-    <summary>Tablet Wireframes</summary>
+- PostgreSQL was used for the database
 
-    ![Tablet Wireframes](documentation/wireframes/ipad.png)
-    </details>
-    <details>
-    <summary>Smartphone Wireframes</summary>
+**Recipe Post**
+- Stores all the data for the recipes
 
-    ![Smartphone Wireframes](documentation/wireframes/smartphone.png)
-    </details>
+| **Key**        |  **Type**     | **Purpose**|
+|-------------- |-------------- |-------------|
+| _id           |  ObjectId     | ObjectId of this document
+| title   |   String      | stores the title of the recipe
+| author     |   User Id     | stores the id of the User object
+| content     |   String      | stores the content of the recipe
+| featured_image        |   Image      | stores a image of the recipe
+| created_on      |   date      | stores the date the recipe was created 
 
--   ### Entity-Relationship diagrams for DBMS
-    
-      Notes on the ER diagrams :
+**TimeSlot**
+- Stores all the bookings made by customers
 
-      - The ER diagrams provided show the logical data model.  The many-to-many relationship between hikes and their 'likes' is represented as normalized tables to clarify the relationship.  In the models.py file the 'likes' data item is declared as part of the Hike class, with django handling how this relationship is represented in the physical database tables in the background.
+| **Key**        |  **Type**     | **Purpose**|
+|-------------- |-------------- |-------------|
+| _id           |  ObjectId     | ObjectId of this document
+| date   |   string      | stores the date of the booking
+| time     |   string     | stores the time of the booking
+| first_name     |   String      | stores the customers first name
+| last_name        |   String     | stores the customers Last name
+| phone      |   number     | stores the customers number
+| number_of_people     |   number      | stores the number of people attending
+| user      |   User Id      | stores the Users Id
 
-      - The Users table in the ER diagrams is also a logical representation of the data captured during user registration and how it relates to the application data model.  The Users table itself is not declared in the models.py file, but is handled by the django modules and this logical view does not reflect all columns and constraints etc. used by the physical data tables in the database.
+**Closed**
+- Stores all the dates the restaurant is closed
 
-      - The data model tables are split into two diagrams so that the relationships between the tables can be easily read.
+| **Key**        |  **Type**     | **Purpose**|
+|-------------- |-------------- |-------------|
+| _id           |  ObjectId     | ObjectId of this document
+| day  |   date     | stores the date 
+| reason    |   string     | stores the reason the store is closed
+| user      |   User Id      | stores the Users Id that created the event
 
-      - A booking is a many-to-many relationship between Schedule and Users but because it also has its own data - places_reserved, it is declared in its own separate class in models.py
+**FoodMenu**
+- Stores all the menu items
 
-      - Because there could be multiple guided hikes on the same hike trail in a single day, the schedule table needs a composite primary key of the hike_id and 'starts' column.  This is handled using a constraint in models.py.
-
-    <details>
-    <summary>ER Diagrams - Hike-Comment-Likes</summary>
-
-    ![ER Diagrams1](documentation/entity-relationship-diagrams/hike-comment-likes.png)
-    </details>
-    <details>
-    <summary>ER Diagrams - Hike-Schedule-Booking</summary>
-
-    ![ER Diagrams2](documentation/entity-relationship-diagrams/hike-schedule-booking.png)
-    </details>
-
-## Planning
-
-A GitHub Project with linked Issues was used as the Agile tool for this project.  User Stories with acceptance criteria were defined using GitHub Issues and development of code for these stories was managed using a Kanban board.  All of the User Stories were linked to a 'parent' Epic issue to show how they all supported the over-arching goal of the project.  The acceptance criteria were tested as each story moved to 'Done' and were also included in the final pre-submission manual testing documented in the Testing section of this README.
-
-The Epic, User Stories and Kanban board can be accessed here : [Wayfarers Agile Tool](https://github.com/elainebroche-dev/pf4-wayfarers-guided-hikes/projects/1)
+| **Key**        |  **Type**     | **Purpose**|
+|-------------- |-------------- |-------------|
+| _id           |  ObjectId     | ObjectId of this document
+| title  |   string      | stores the title of the dish
+| description     |   string     | stores a short description of the dish
+| course     |   number      | stores a number indicating to a course
+| price        |   number    | stores the price of the dish
 
 
 ## Technologies Used
@@ -242,7 +251,7 @@ automated tests
 
     - As this project uses Django templates the html has been validated by manually clicking through the application pages, copying the source of the rendered pages and then validating this version of the html using the W3C Validator (link shown above).
 
-    - Results: All pages passed without errors except the Recipe detail page. An error was indicated for use of % in width attribute in image tag.
+    - Results: All pages passed without errors except the Recipe detail page. An error was indicated for use of % in width attribute in image tag, expected a number.
   
 
 - [CSS Validator](https://jigsaw.w3.org/css-validator/)
@@ -253,95 +262,107 @@ automated tests
 - [Python Validator](http://pep8online.com/)
 
   <details>
-    <summary>project urls.py validation results</summary>
+    <summary>Booking admin.py</summary>
 
-    ![Project urls.py](documentation/testing/validation/pep8-validation-project-urls.png)
-  </details>
-  <details>
-    <summary>project settings.py validation results</summary>
-
-    ![Project settings.py](documentation/testing/validation/pep8-validation-project-settings.png)
-  </details>
-  <details>
-    <summary>application urls.py validation results</summary>
-
-    ![Application urls.py](documentation/testing/validation/pep8-validation-app-urls.png)
-  </details>
-  <details>
-    <summary>admin.py validation results</summary>
-
-    ![admin.py](documentation/testing/validation/pep8-validation-admin.png)
-  </details>
-  <details>
-    <summary>forms.py validation results</summary>
-
-    ![forms.py](documentation/testing/validation/pep8-validation-forms.png)
-  </details>
-  <details>
-    <summary>models.py validation results</summary>
-
-    ![models.py](documentation/testing/validation/pep8-validation-models.png)
-  </details>
-  <details>
-    <summary>views.py validation results</summary>
-
-    ![views.py](documentation/testing/validation/pep8-validation-views.png)
-  </details>
-  <details>
-    <summary>test_admin.py validation results</summary>
-
-    ![test_admin.py](documentation/testing/validation/pep8-validation-test_admin.png)
-  </details>
-  <details>
-    <summary>test_forms.py validation results</summary>
-
-    ![test_forms.py](documentation/testing/validation/pep8-validation-test_forms.png)
-  </details>
-  <details>
-    <summary>test_models.py validation results</summary>
-
-    ![test_models.py](documentation/testing/validation/pep8-validation-test_models.png)
-  </details>
-  <details>
-    <summary>test_views.py validation results</summary>
-
-    ![test_views.py](documentation/testing/validation/pep8-validation-test_views.png)
+  [Booking admin.py](pep8/booking_admin.txt)
   </details>
   
+  <details>
+    <summary>Booking models.py</summary>
+    
+  [Booking models.py](pep8/booking_models.txt)
+  </details>
+
+  <details>
+    <summary>Booking test_views.py</summary>
+    
+  [Booking test_views.py](pep8/booking_test_views.txt)
+  </details>
+
+  <details>
+    <summary>Booking views.py</summary>
+    
+  [Booking views.py](pep8/booking_views.txt)
+  </details>
+  
+  <details>
+    <summary>Easy Recipes admin.py</summary>
+    
+  [Easy Recipes admin.py](pep8/easy_recipe_admin.txt)
+  </details>
+  
+  <details>
+    <summary>Easy Recipes models.py</summary>
+    
+  [Easy Recipes models.py](pep8/easy_recipe_models.txt)
+  </details>
+
+  <details>
+    <summary>Easy Recipes test_views.py</summary>
+    
+  [Easy Recipes test_views.py](pep8/easy_recipe_test_views.txt)
+  </details>
+
+  <details>
+    <summary>Easy Recipes views.py</summary>
+    
+  [Easy Recipes views.py](pep8/easy_recipe_views.txt)
+  </details>
+
+  <details>
+    <summary>Home views.py</summary>
+    
+  [Home views.py](pep8/home_views.txt)
+  </details>
+
+  <details>
+    <summary>Menu admin.py</summary>
+    
+  [Menu admin.py](pep8/menu_admin.txt)
+  </details>
+
+  <details>
+    <summary>Menu models.py</summary>
+    
+  [Menu models.py](pep8/menu_models.txt)
+  </details>
+  
+  <details>
+    <summary>Menu test_views.py</summary>
+    
+  [Menu test_views.py](pep8/menu_test_views.txt)
+  </details>
+
+  <details>
+    <summary>Menu views.py</summary>
+    
+  [Menu views.py](pep8/menu_views.txt)
+  </details>
 
 ### Automated Testing
-
-  - [Jest](https://jestjs.io/) was used to test the application javascript and jquery code.  The functionality tested was the code to fade out, slide up and remove any raised alert messages after a 5 second delay.  The code is located in [Script JS](static/js/script.js), the test is located in [Test JS](static/js/tests/script.test.js)
-
-  - Jest test results :     
-    ![JS Test Results](documentation/testing/results/jquery-test-results.png)
 
    - [Django testing tools](https://docs.djangoproject.com/en/3.2/topics/testing/tools/) were used to test the application python code.  
    - DB tests were run in the development environment against a local SQLite3 database. 
    - Tests were written for the following files :
 
-      - [forms.py](hikebooker/forms.py)  test file: [test_forms.py](hikebooker/test_forms.py)
-      - [models.py](hikebooker/models.py)  ters file: [test_models.py](hikebooker/test_models.py)
-      - [views.py](hikebooker/views.py)  test file: [test_views.py](hikebooker/test_views.py)
-      - [admin.py](hikebooker/admin.py)  test file: [test_admin.py](hikebooker/test_admin.py)  (tests were added for the customizations made to the django admin functionality)
+      - Booking tests for [views.py](booking/views.py):  test file: [test_views.py](booking/test_views.py)
+      - Easy Recipe tests for [views.py](easy_recipe/views.py): test file: [test_views.py](easy_recipe/test_views.py)
+      - Menu tests for [views.py](menu/views.py):  test file: [test_views.py](menu/test_views.py)
+      - Home tests for [views.py](home/views.py): test file: [test_views.py](home/test_views.py)
 
   - Django test results and coverage :   
-    ![Python Test Results](documentation/testing/results/python-coverage-test-results.png)
+    ![Python Test Results](static/images/coverage1.jpg)
+    ![Python Test Results Continued](static/images/coverage2.jpg)
 
 
 ### Browser Compatibility
 
-- Chrome DevTools was used to test the responsiveness of the application on different screen sizes.  In addition, testing has been carried out on the following browsers :
-    - Google Chrome version 9.0.4606.81 (64-bit)
-    - Firefox version 93.0 (64-bit)
-    - Microsoft Edge 94.0.992.38 (64-bit)
+- Chrome DevTools was used to test the responsiveness of the application on different screen sizes.
  
     
 ### Manual Testing Test Cases and Results
 
-- The link below details the test cases that were used, the results, and a cross-reference to the Feature ID that each test case exercised (click link to open pdf).  The test cases are primarily based on the User Story acceptance criteria that were used to test iterations of the code during development.
-  
-  - <a href="https://github.com/elainebroche-dev/pf4-wayfarers-guided-hikes/blob/517f5abbe2b0bd575b9da340f0560d13466340a4/documentation/testing/results/test-cases.pdf" target="_blank">Manual Testing - Test Cases and Results</a>
+- The application was tested for both site users and staff users. Recipes was added, updated and deleted. Menu add items, edit and delete items was tested. Booking was tested for two users booking at the same time for the same time slot. The reset password was tested with the email confirmation. Adding, deleting and editing closed days was tested. Customer booking and deleting was tested. All links and navigation links were tested.
 
 ### Known bugs
 
@@ -349,18 +370,9 @@ automated tests
 
 ## Deployment
 
-Detailed below are instructions on how to clone this project repository and the steps to configure and deploy the application.  Code Institute also provides a summary of similar process steps here : [CI Cheat Sheet](https://codeinstitute.s3.amazonaws.com/fst/Django%20Blog%20Cheat%20Sheet%20v1.pdf)
-
-1. How to Clone the Repository
-2. Create Application and Postgres DB on Heroku
-3. Configure Cloudinary to host images used by the application
-4. Connect the Heroku app to the GitHub repository
-5. Executing automated tests
-6. Final Deployment steps
-
 ### How to Clone the Repository 
 
-- Go to the https://github.com/elainebroche-dev/pf4-wayfarers-guided-hikes repository on GitHub 
+- Go to the https://github.com/louwJohan/project4-ci repository on GitHub 
 - Click the "Code" button to the right of the screen, click HTTPs and copy the link there
 - Open a GitBash terminal and navigate to the directory where you want to locate the clone
 - On the command line, type "git clone" then paste in the copied url and press the Enter key to begin the clone process
@@ -403,92 +415,30 @@ Detailed below are instructions on how to clone this project repository and the 
 
 ### Connect the Heroku app to the GitHub repository
 - Go to the Application Configuration page for the application on Heroku and click on the Deploy tab.
-- Select GitHub as the Deployment Method and if prompted, confirm that you want to connect to GitHub. Enter the name of the github repository (the one used for this project is (https://github.com/elainebroche-dev/pf4-wayfarers-guided-hikes) and click on Connect to link up the Heroku app to the GitHub repository code.
+- Select GitHub as the Deployment Method and if prompted, confirm that you want to connect to GitHub. Enter the name of the github repository (the one used for this project is (https://github.com/louwJohan/project4-ci) and click on Connect to link up the Heroku app to the GitHub repository code.
 - Scroll down the page and choose to either Automatically Deploy each time changes are pushed to GitHub, or Manually deploy - for this project Manual Deploy was selected.
 - The application can be run from the Application Configuration page by clicking on the Open App button.
-- The live link for this project is (https://pf4-wayfarers.herokuapp.com/)
-
-### Executing automated tests
-- The existing automated jquery/javascript test can be executed using jest as follows :
-  - If jest is not installed then run the command : npm install --save-dev jest
-  - Run the js test file using the command : npm test
-
-- The existing automated django/python tests are executed using unittest as follows :
-  - Run the python tests using the command : python3 manage.py test
-  - To run just a subset of the tests, then append the application and test file name to the command, e.g. : python3 manage.py test hikebooker.test_models
-
-- Test coverage for the django/python tests can be reviewed using the coverage tool :
-  - If coverage is not installed then run the command : pip3 install coverage
-  - Execute the following series of commands to determine test coverage :
-    - coverage run --source=hikebooker manage.py test
-    - coverage report
-    - coverage html
-    - python3 -m http.server  (detailed results can be viewed via the browser in the htmlcov directory)
-
+- The live link for this project is (https://the-smoking-goat.herokuapp.com/)
 
 ### Final Deployment steps
 Once code changes have been completed and tested on localhost, the application can be prepared for Heroku deployment as follows :
 - Set DEBUG flag to False in settings.py
-- Ensure this line exists in settings.py to make summernote work on the deployed environment (CORS security feature): X_FRAME_OPTIONS = 'SAMEORIGIN'
 - Ensure requirements.txt is up to date using the command : pip3 freeze --local > requirements.txt
 - Push files to GitHub
 - In the Heroku Config Vars for the application delete this environment variable :  DISABLE_COLLECTSTATIC
 - On the Heroku dashboard go to the Deploy tab for the application and click on deploy branch
-
-#### The live link to the application can be found here - [P4 Wayfarers Hikes](https://pf4-wayfarers.herokuapp.com/) 
 
 
 ## Credits 
 
 ### Code 
 - Much of the coding and testing relies heavily on information in the "Hello Django" and "I Think Therefore I Blog" walkthroughs in the Code Institue Full Stack Frameworks module. 
-- Code on how to implement data model constraints was based on information found here : [Constraints](https://docs.djangoproject.com/en/3.2/ref/models/constraints/)
-- Information on errors when a foreign key field was included in search field list was found here : [Search Forgein Key](https://stackoverflow.com/questions/11754877/troubleshooting-related-field-has-invalid-lookup-icontains)
-- Code to restrict data value range : [Min Max Values](https://stackoverflow.com/questions/65416042/max-and-min-values-for-a-django-model-field-according-to-the-values-already-int)
-- Information on how to round decimal field to 2 places : [Round Decimals](https://stackoverflow.com/questions/37958130/automatically-round-djangos-decimalfield-according-to-the-max-digits-and-decima)
-- Information on how to implement jumbotron images : [Jumbotron](https://stackoverflow.com/questions/22000754/responsive-bootstrap-jumbotron-background-image)
-- Code on how to remove trailing zeroes from decimal fields : [Normalize function](https://stackoverflow.com/questions/40135464/django-remove-trailing-zeroes-for-a-decimal-in-a-template)
-- Setting to turn off auth email verification : [EMAIL VERIFICATION](https://stackoverflow.com/questions/53968044/django-user-registration-error-with-django-rest-auth-package)
-- Some ideas on how to format the authentication/Sign in/Registration pages came from : [Page layout demo](https://www.bootstrapdash.com/product/free-bootstrap-login/#product-demo-section)
-- Code to 'bold' active navbar link : [Active Link](https://stackoverflow.com/questions/32931436/active-tag-on-bootstrap-with-django)
-- Code to remove class from base.html : [Override class](https://stackoverflow.com/questions/34232936/dry-method-to-add-a-class-to-body-in-the-base-template)
-- Code to help with order_by for composite foreign key : [Composite order](https://stackoverflow.com/questions/1474135/django-admin-ordering-of-foreignkey-and-manytomanyfield-relations-referencing-u)
-- Code to help filter upcoming bookings : [Date handling](https://stackoverflow.com/questions/21576727/django-records-greater-than-particular-date)
-- Code to build dropdown for schedule : [Drop-down control](https://stackoverflow.com/questions/57533058/django-how-to-add-items-to-bootstrap-dropdown)
-- Code on how to build dropdown : [Additional Drop-down information](https://getbootstrap.com/docs/5.0/components/dropdowns/)
-- Code on how to convert number string to list : [Python lists](https://stackoverflow.com/questions/4395230/building-a-list-in-django-templates)
-- Code on how to display messages to user : [Alert messages](https://stackoverflow.com/questions/28240746/django-how-to-implement-alertpopup-message-after-complete-method-in-view)
-- Additional code on alert message handling : [Fade and Slide](https://stackoverflow.com/questions/23101966/bootstrap-alert-auto-close)
-- Code to test automatically generated dates : [Date Mocking](https://stackoverflow.com/questions/49874923/how-to-test-auto-now-add-in-django)
-- Code on how to use setUpTestData : [Test Data generation](https://stackoverflow.com/questions/29428894/django-setuptestdata-vs-setup)
-- Code on how to create a user reference and log them in : [Test User login](https://stackoverflow.com/questions/2619102/djangos-self-client-login-does-not-work-in-unit-tests)
-- Code to help with naive date : [Timezone aware dates](https://stackoverflow.com/questions/4530069/how-do-i-get-a-value-of-datetime-today-in-python-that-is-timezone-aware)
-- Code to help with testing admin.py customizations : [Custom Admin test](https://newbedev.com/testing-custom-admin-actions-in-django)
-- Code on how to delay jest test : [Jest Delay](https://stackoverflow.com/questions/46077176/jest-settimeout-not-pausing-test)
-- Code on how to stop jquery animations for jest testing : [De-activate animations](https://stackoverflow.com/questions/61295452/jest-test-jquery-fadein-fadeout-on-specific-elements)
+- 
 
-### Content 
-- Information on individual hikes was found on the Government of Canada - Parks Canada website : [Parks Canada](https://www.pc.gc.ca/en/pn-np/ab/banff/activ/randonee-hiking)
 
 ### Media 
-- The Lato font used was imported from [Google Fonts](https://fonts.google.com/)
-- Fontawesome was used for icons, including icons for like, comments, user - [Font Awesome](https://fontawesome.com/)
+- The Raleway font used was imported from [Google Fonts](https://fonts.google.com/)
+- Fontawesome was used for icons [Font Awesome](https://fontawesome.com/)
 - The applicaiton favicon was created from the "exchange" icon image on [Font Awesome](https://fontawesome.com/) 
-- The default hike image : Photo by <a href="https://unsplash.com/@sickhews?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Wes Hicks</a> on <a href="https://unsplash.com/s/photos/hiking-boots?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-- Jumbotron background image : Photo by <a href="https://unsplash.com/@stephenleo1982?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Stephen Leonardi</a> on <a href="https://unsplash.com/s/photos/hiking?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-- Hike image : Photo by <a href="https://unsplash.com/@caraventurera?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Cara Fuller</a> on <a href="https://unsplash.com/s/photos/hike-waterfall?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-- Hike image : Photo by <a href="https://unsplash.com/@larisabirta?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Larisa Birta</a> on <a href="https://unsplash.com/s/photos/hike?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-- Hike image : Photo by <a href="https://unsplash.com/@kalenemsley?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Kalen Emsley</a> on <a href="https://unsplash.com/s/photos/hiking-canada?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-- Hike image : Photo by <a href="https://unsplash.com/@kalenemsley?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Kalen Emsley</a> on <a href="https://unsplash.com/s/photos/hiking-canada?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-- Hike image : Photo by <a href="https://unsplash.com/@hollymandarich?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Holly Mandarich</a> on <a href="https://unsplash.com/s/photos/hiking?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-- Hike image : Photo by <a href="https://unsplash.com/@toomastartes?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Toomas Tartes</a> on <a href="https://unsplash.com/s/photos/hiking?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-- Hike image : Photo by <a href="https://unsplash.com/@kalenemsley?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Kalen Emsley</a> on <a href="https://unsplash.com/s/photos/hike?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-- Hike image : Photo by <a href="https://unsplash.com/@guernseyphotographer?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Simon English</a> on <a href="https://unsplash.com/s/photos/hiking?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-- Hike image : Photo by <a href="https://unsplash.com/@wanderingteddybear?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ted Bryan Yu</a> on <a href="https://unsplash.com/s/photos/hiking?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-- Hike image : Photo by <a href="https://unsplash.com/@hiking_corgi?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Vlad D</a> on <a href="https://unsplash.com/s/photos/hike-meadow?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-- Background for Register, Sign in and Sign out : Photo by <a href="https://unsplash.com/@baileyzindel?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Bailey Zindel</a> on <a href="https://unsplash.com/s/photos/mountains?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+- Pexels.com was used for all the images[Pexels](https://www.pexels.com/)
   
-  
-### Acknowledgments
-
-- Thank you to my mentor Brian Macharia for his continuing help and feedback. His advice and tips have been very beneficial, especially in the area of coding standards and best practice.

@@ -7,7 +7,7 @@
             <h1>{{ recipe.title }}</h1>
             <h2>By {{ recipe.author }} </h2>
             <div class="d-none d-md-block col-md-6 img-fluid">
-                {% if "placeholder" in post.featured_image.url %}
+                {% if "placeholder" in recipe.featured_image.url %}
                 <img src="{% static 'images/cooking.jpg' %}" width="100%" alt="recipe image">
                 {% else %}
                 <img src=" {{ recipe.featured_image.url }}" width="100%" alt="recipe image">
