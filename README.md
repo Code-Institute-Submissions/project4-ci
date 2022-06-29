@@ -3,7 +3,7 @@
 
 [View the live project here](https://the-smoking-goat.herokuapp.com/)
 
-The Smoking Goat is a website for a restaurant that allows bookings to be made by registered users. It also allows users access to recipes created by the chef. The website allows staff to update the menu, add or remove items. Staff members can also  edit, delete or create new recipes on the site without accessing the admin panel. The staff also has access to a list of bookings for a given day and can add, edit or delete days that the restaurant is not open ex. Christmas day.
+The Smoking Goat is a website for a restaurant that allows bookings to be made by registered users. It also allows users access to recipes created by the chef. The website allows staff to update the menu, add or remove items. Staff members can also  edit, delete or create new recipes on the site without accessing the admin panel. The staff also has access to a list of bookings for a given day and can add, edit or delete days that the restaurant is not open ex. Christmas day. The booking system only takes 5 bookings per time slot for up to 6 people per booking. If the time is fully booked the time will not be available when making a booking.
 
 
 ## Index – Table of Contents
